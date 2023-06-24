@@ -1,0 +1,11 @@
+* {
+    box-sizing: border-box;
+  }
+     
+  /* CSS Custom Properties */
+  :root {
+    --main-bg-dark: #4a4e4d;
+    --main-bg-light: #ffeaea;
+    --top-menu-bg: #0e9aa7;
+    --sub-menu-bg: #3da4ab;
+  }
