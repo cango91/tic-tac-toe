@@ -33,10 +33,15 @@ h1.main-title {
     font-family: 'Monoton', cursive;
     font-weight: 400;
     font-size: 50pt;
-    padding: 0 auto;
+    margin: auto;
     margin-top: 0;
     margin-bottom: 0;
     min-width: 420px;
+}
+
+header h2{
+
+    margin-top: 2vh;
 }
 
 #board {
@@ -100,6 +105,19 @@ h1.main-title {
     background-image: none;
 }
 
+#msg{
+    background-color:antiquewhite;
+}
+
+footer{
+    margin-top: 20px;
+    color: #dddddd;
+}
+
+footer a{
+    color: #cfb4b4;
+}
+
 @media screen and (max-width: 500px) {
     main {
 
@@ -122,15 +140,14 @@ h1.main-title {
     }
 }
 
+
 @media screen and (max-height:675px) and (orientation:landscape) {
     body {
         padding-top: 10vh;
-        /* Reduce padding-top */
     }
 
     h1.main-title {
         font-size: 30pt;
-        /* Reduce font size */
         max-height: fit-content;
     }
 
@@ -139,13 +156,8 @@ h1.main-title {
         /* Reduce margin-top */
     }
 
-    /* .icons{
-        float: left;
-        display: flex;
-        flex-direction: column;
-        margin-top: 25px;
-        overflow-y: visible;
-        background-color: #cfb4b4;
-        height: 100vh;
-      } */
+    header h2{
+        margin-top: auto;
+    }
+
 }

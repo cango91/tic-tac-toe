@@ -10,19 +10,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
+    
     <header>
         <div>
-
-
             <h1 class="main-title">Tic Tac Toe</h1>
-            <!-- <div style="background-color:antiquewhite;"><h2>Turn: <span id="turn">
-    </span></h2></div> -->
         </div>
         <nav class="icons">
-            <div id="sound-on">
+            <div id="sound-on" style="display: none;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width=24 height=24>
                     <path d="M9 18V5l12-2v13" fill="none"></path>
@@ -57,45 +55,10 @@
                 </svg>
             </div>
         </nav>
-<!-- 
-        <nav class="side-icons">
-            <div id="sound-on">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width=24 height=24>
-                    <path d="M9 18V5l12-2v13" fill="none"></path>
-                    <circle cx="6" cy="18" r="3"></circle>
-                    <circle cx="18" cy="16" r="3"></circle>
-                </svg>
-            </div>
-            <div id="sound-off">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width=24 height=24>
-                    <path d="M9 18V5l12-2v13" fill="none"></path>
-                    <circle cx="6" cy="18" r="3"></circle>
-                    <circle cx="18" cy="16" r="3"></circle>
-                    <line x1="1" y1="1" x2="23" y2="23" stroke="brown"></line>
-                    <line x1="23" y1="1" x2="1" y2="23" stroke="brown"></line>
-                </svg>
-            </div>
-            <div id="settings">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width=24 height=24>
-
-                    <path fill="darkgray"
-                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06 .06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V22a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H2a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06c.5.5 1.37.6 1.82.33a1.65 1.65 0 0 0 1-1.51V2a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H22a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                    </path>
-                    <circle cx="12" cy="12" r="3" fill="lightgrey"></circle>
-                </svg>
-            </div>
-            <div id="restart">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="32" stroke-linecap="square" stroke-miterlimit="10" width=24 height=24>
-                    <path d="M320,146s24.36-12-64-12A160,160,0,1,0,416,294"></path>
-                    <polyline points="256 58 336 138 256 218"></polyline>
-                </svg>
-            </div>
-        </nav> -->
-
+        <div id="msg""><h2>Turn: <span id="turn">
+        </span></h2></div>
     </header>
+
     <main>
 
 
@@ -125,7 +88,10 @@
         </div>
     </main>
 
-
 </body>
+<footer>
+    <audio src="assets/chill-abstract-intention-12099.mp3" muted loop>Your browser doesn't support audio</audio>
+    Music by <a href="https://pixabay.com/users/coma-media-24399569/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=12099">Coma-Media</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=12099">Pixabay</a>
+</footer>
 
 </html>

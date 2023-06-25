@@ -38,3 +38,19 @@ winCondition.winningCondition.forEach((coord)=>{
     winningSquare.forEach(line => line.setAttribute('stroke','red'));
 })
 
+const audio = document.querySelector('audio');
+
+const muteBtnEl = document.querySelector('#sound-off');
+const unMuteBtnEl = document.querySelector('#sound-on');
+
+unMuteBtnEl.addEventListener('click',()=>{
+    audio.muted = true;
+    unMuteBtnEl.style.display  = 'none';
+    muteBtnEl.style.display = 'inline-block';
+});
+muteBtnEl.addEventListener('click', () =>{
+    audio.muted=false;
+    audio.play();
+    unMuteBtnEl.style.display  = 'inline-block';
+    muteBtnEl.style.display = 'none';
+});
