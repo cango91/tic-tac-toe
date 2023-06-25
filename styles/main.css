@@ -1,16 +1,8 @@
 * {
     box-sizing: border-box;
-  }
-     
-  /* CSS Custom Properties */
-  :root {
-    --main-bg-dark: #4a4e4d;
-    --main-bg-light: #ffeaea;
-    --top-menu-bg: #0e9aa7;
-    --sub-menu-bg: #3da4ab;
-  }
-  
-  body {
+}
+
+body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,26 +10,26 @@
     height: 100%;
     padding-top: 20vh;
     background-color: #323041;
-  }
-  
-  header {
+}
+
+header {
     position: fixed;
     top: 0;
     width: 100%;
     background-color: #cfb4b4;
     text-align: center;
-    height: 20vh;
-  }
-  
-  main {
+    max-height: 20vh;
+}
+
+main {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 80vw;
-  }
-  
-  h1.main-title {
+}
+
+h1.main-title {
     font-family: 'Monoton', cursive;
     font-weight: 400;
     font-size: 50pt;
@@ -45,61 +37,115 @@
     margin-top: 0;
     margin-bottom: 0;
     min-width: 420px;
-  }
-  
-  #board {
+}
+
+#board {
     background-color: darkgrey;
     display: grid;
     grid-template-rows: repeat(3, 20vmin);
     grid-template-columns: repeat(3, 20vmin);
     border-radius: 5%;
-  }
-  
-  #board>div {
+}
+
+#board>div {
     background-color: lightgrey;
     margin: 2vmin;
     border-radius: 25%;
     border: 1vmin solid whitesmoke;
     ;
-  }
-  
-  #board>div:hover:not(.filled) {
-    background-color: whitesmoke;
-    cursor: pointer;
-  }
+}
 
-  .icons > div{
-    border: solid rgba(0,0,0,0);
+#board>div:hover:not(.filled) {
+    background-color: whitesmoke;
+    background-image: radial-gradient(circle at center, whitesmoke, #c7c7c7);
+    cursor: pointer;
+}
+
+#board>div.filled:hover {
+    cursor: not-allowed;
+}
+
+#board>div:active:not(.filled) {
+    background-color: #dddddd;
+    background-image: none;
+}
+.icons {
+    background-color: #cfb4b4;
+}
+.icons>div {
+    border: solid rgba(0, 0, 0, 0);
     border-radius: 10%;
     padding: 2px;
-  }
-  .icons > div:hover{
-    background-color: darksalmon;
-    border: solid;
-  }
+    display: inline-block;
+}
 
-  .icons > div:click{
-    padding: 1px;
-  }
-  
-  @media screen and (max-width: 500px) {
+.icons>div:hover {
+    background-color: darksalmon;
+    background-image: radial-gradient(circle at center, darksalmon, #b55f52);
+    border: solid;
+}
+
+
+#sound-off:hover line {
+    stroke: whitesmoke;
+}
+
+#sound-off:active line {
+    stroke: #cfb4b4;
+}
+
+.icons>div:active {
+    /* padding: 1px; */
+    background-color: #93554c;
+    background-image: none;
+}
+
+@media screen and (max-width: 500px) {
     main {
-  
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      min-width: 90vw;
+
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        min-width: 90vw;
     }
-  
+
     #board {
-      min-width: 90%;
-      height: 90vmin;
-      align-items: center;
-      justify-content: center;
-      display: grid;
-      grid-template-rows: repeat(3, 30vmin);
-      grid-template-columns: repeat(3, 30vmin);
-      border-radius: 5%;
-      
+        min-width: 90%;
+        height: 90vmin;
+        align-items: center;
+        justify-content: center;
+        display: grid;
+        grid-template-rows: repeat(3, 30vmin);
+        grid-template-columns: repeat(3, 30vmin);
+        border-radius: 5%;
+
     }
-  }
+}
+
+@media screen and (max-height:675px) and (orientation:landscape) {
+    body {
+        padding-top: 10vh;
+        /* Reduce padding-top */
+    }
+
+    h1.main-title {
+        font-size: 30pt;
+        /* Reduce font size */
+        max-height: fit-content;
+    }
+
+    main {
+        margin-top: 20vh;
+        /* Reduce margin-top */
+    }
+
+    /* .icons{
+        float: left;
+        display: flex;
+        flex-direction: column;
+        margin-top: 25px;
+        overflow-y: visible;
+        background-color: #cfb4b4;
+        height: 100vh;
+      } */
+}
