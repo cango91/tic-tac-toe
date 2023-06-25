@@ -4,7 +4,7 @@ import Core from "./core.js";
 const header = document.querySelector('header');
 const main = document.querySelector('main');
 
-Object.keys(Core.GameModes).forEach((mode)=>main.append((el=>{el.innerText=mode;return el;})(document.createElement('h1'))));
+//Object.keys(Core.GameModes).forEach((mode)=>main.append((el=>{el.innerText=mode;return el;})(document.createElement('h1'))));
 
 
 // testing

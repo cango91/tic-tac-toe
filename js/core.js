@@ -2,7 +2,6 @@
     The core functionality of tic-tac-toe game (WIP)
 */
 
-
 export default Object.freeze(class Core {
     #gameMode;
     #gameState;
@@ -56,7 +55,8 @@ export default Object.freeze(class Core {
             };
             return;
         }
-        console.error(`Invalid PlayerController. Must be one of: Core.PlayerControllers.{${Object.keys(Core.PlayerControllers)}}`);
+        // console.error(`Invalid PlayerController. Must be one of: Core.PlayerControllers.{${Object.keys(Core.PlayerControllers)}}`);
+        throw new this.#InvalidPlayerControllerError(`Player controller must be one of Core.PlayerControllers.{${Object.keys(Core.PlayerControllers)}}`);
     }
 
     #setTurn(player) {
@@ -64,13 +64,34 @@ export default Object.freeze(class Core {
             this.#turn = player;
             return;
         }
-        throw new this.InvalidPlayerError(`Invalid Player. Must be one of: Core.Players.{${Object.keys(Core.Players)}}`);
+        throw new this.#InvalidPlayerError(`Invalid Player. Must be one of: Core.Players.{${Object.keys(Core.Players)}}`);
     }
 
     #InvalidPlayerError = class InvalidPlayerError extends Error {
         constructor(msg) {
             super(msg);
-            this.name = "Invalid Player Error.";
+            this.name = "Invalid Player Error";
+        }
+    }
+
+    #OutOfTurnError = class OutOfTurnError extends Error{
+        constructor(msg){
+            super(msg);
+            this.name = "Out of Turn Error";
+        }
+    }
+
+    #IllegalMoveError = class IllegalMoveError extends Error{
+        constructor(msg){
+            super(msg);
+            this.name = "Illegal Move Error";
+        }
+    }
+
+    #InvalidPlayerControllerError = class InvalidPlayerControllerError extends Error{
+        constructor(msg){
+            super(msg);
+            this.name = "Invalid Player Controller";
         }
     }
 
@@ -146,14 +167,13 @@ export default Object.freeze(class Core {
     get boardState() { return this.#boardState; }
     get gameState() { return this.#gameState; }
 
-    nextTurn() {
+    async nextTurn() {
 
     }
 
     #makeMove(player, row, col) {
         if (this.#boardState[row][col] !== null) {
-            console.error('Tried move on non-empty cell!');
-            return;
+            throw new this.#IllegalMoveError(`Can't make a move on cell ${row},${col}, it is already occupied by ${this.#boardState[row][col]}`);
         }
         if (Object.values(Core.Players).includes(player)) {
             this.#boardState[row][col] = player;

@@ -9,3 +9,83 @@
     --top-menu-bg: #0e9aa7;
     --sub-menu-bg: #3da4ab;
   }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    padding-top: 20vh;
+    background-color: #323041;
+  }
+  
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #cfb4b4;
+    text-align: center;
+    height: 20vh;
+  }
+  
+  main {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+  }
+  
+  h1.main-title {
+    font-family: 'Monoton', cursive;
+    font-weight: 400;
+    font-size: 50pt;
+    padding: 0 auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    min-width: 420px;
+  }
+  
+  #board {
+    background-color: darkgrey;
+    display: grid;
+    grid-template-rows: repeat(3, 20vmin);
+    grid-template-columns: repeat(3, 20vmin);
+    border-radius: 5%;
+  }
+  
+  #board>div {
+    background-color: lightgrey;
+    margin: 2vmin;
+    border-radius: 25%;
+    border: 1vmin solid whitesmoke;
+    ;
+  }
+  
+  #board>div:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+  }
+  
+  @media screen and (max-width: 500px) {
+    main {
+  
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      min-width: 90vw;
+    }
+  
+    #board {
+      min-width: 90%;
+      height: 90vmin;
+      align-items: center;
+      justify-content: center;
+      display: grid;
+      grid-template-rows: repeat(3, 30vmin);
+      grid-template-columns: repeat(3, 30vmin);
+      border-radius: 5%;
+      
+    }
+  }

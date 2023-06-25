@@ -1,19 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
-    <script defer type="module" src="js/main.js"></script>
-    <link rel="stylesheet" href="styles/main.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Tic Tac Toe</title>
+  <link href="styles/main.css" rel="stylesheet" type="text/css" />
+  <script defermo type="module" src="js/main.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <header>
+  <header>
+    <h1 class="main-title">Tic Tac Toe</h1>
+    <div style="background-color:antiquewhite;"><h2>Turn: <span id="turn"></span></h2></div>
+    
+  </header>
+  <main>
+    <div id="board">
+      <div id="sq00"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <line x1="20" y1="20" x2="80" y2="80" stroke="black" stroke-width="5" />
+          <line x1="20" y1="80" x2="80" y2="20" stroke="black" stroke-width="5" />
+        </svg></div>
+      <div id="sq01"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" stroke="black" stroke-width="5" fill="none" />
+        </svg></div>
+      <div id="sq02"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        </svg></div>
+      <div id="sq10"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        </svg></div>
+      <div id="sq11"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        </svg></div>
+      <div id="sq12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        </svg></div>
+      <div id="sq20"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        </svg></div>
+      <div id="sq21"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        </svg></div>
+      <div id="sq22"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        </svg></div>
+    </div>
+  </main>
 
-    </header>
-    <main>
-
-    </main>
     
 </body>
 </html>
