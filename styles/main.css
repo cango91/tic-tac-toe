@@ -63,9 +63,23 @@
     ;
   }
   
-  #board>div:hover {
+  #board>div:hover:not(.filled) {
     background-color: whitesmoke;
     cursor: pointer;
+  }
+
+  .icons > div{
+    border: solid rgba(0,0,0,0);
+    border-radius: 10%;
+    padding: 2px;
+  }
+  .icons > div:hover{
+    background-color: darksalmon;
+    border: solid;
+  }
+
+  .icons > div:click{
+    padding: 1px;
   }
   
   @media screen and (max-width: 500px) {

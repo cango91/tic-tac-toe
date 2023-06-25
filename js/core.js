@@ -3,10 +3,16 @@
 */
 
 export default Object.freeze(class Core {
+    // track if it's a 1p or 2p game
     #gameMode;
+
     #gameState;
     #boardState;
+
+    // track which player's turn
     #turn;
+
+    // track which player is assigned to which controller (human or ai)
     #players;
 
     #checkWinConditions() {
@@ -17,10 +23,10 @@ export default Object.freeze(class Core {
                 this.#boardState[rowA][colA] === this.#boardState[rowB][colB] &&
                 this.#boardState[rowB][colB] === this.#boardState[rowC][colC]
             )
-                return this.#boardState[rowA][colA];
+                return { winner: this.#boardState[rowA][colA], winningCondition: condition };
         }
         // No winner yet, return null for game-on, 0 for tie:
-        return this.#boardState.every(row => row.every(cell => cell !== null)) ? 0 : null;
+        return this.#boardState.every(row => row.every(cell => cell !== null)) ? { winner: 0, winningCondition: null } : { winner: null, winningCondition: null };
     }
     #winConditions = [
         // rows:
@@ -74,22 +80,22 @@ export default Object.freeze(class Core {
         }
     }
 
-    #OutOfTurnError = class OutOfTurnError extends Error{
-        constructor(msg){
+    #OutOfTurnError = class OutOfTurnError extends Error {
+        constructor(msg) {
             super(msg);
             this.name = "Out of Turn Error";
         }
     }
 
-    #IllegalMoveError = class IllegalMoveError extends Error{
-        constructor(msg){
+    #IllegalMoveError = class IllegalMoveError extends Error {
+        constructor(msg) {
             super(msg);
             this.name = "Illegal Move Error";
         }
     }
 
-    #InvalidPlayerControllerError = class InvalidPlayerControllerError extends Error{
-        constructor(msg){
+    #InvalidPlayerControllerError = class InvalidPlayerControllerError extends Error {
+        constructor(msg) {
             super(msg);
             this.name = "Invalid Player Controller";
         }
@@ -167,7 +173,7 @@ export default Object.freeze(class Core {
     get boardState() { return this.#boardState; }
     get gameState() { return this.#gameState; }
 
-    async nextTurn() {
+    nextTurn() {
 
     }
 
