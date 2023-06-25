@@ -54,3 +54,7 @@ muteBtnEl.addEventListener('click', () =>{
     unMuteBtnEl.style.display  = 'inline-block';
     muteBtnEl.style.display = 'none';
 });
+
+setTimeout(() => {
+    headerEl.querySelector('#status-text').innerHTML=`<small>O wins</small>`
+}, 1000);
