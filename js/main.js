@@ -1,18 +1,33 @@
 import Core from "./core.js";
 
-// initialize DOM ref. variables
+// Declare and initialize variables
 const headerEl = document.querySelector('header');
 const mainEl = document.querySelector('main');
 const boardEl = mainEl.querySelector('#board');
 const spanEl = headerEl.querySelector('#status').querySelector('#status-text');
 const iconsEl = headerEl.querySelector('.icons');
-const audio = document.querySelector('audio');
+let audioEl;
 
 const soundOffIcon = iconsEl.querySelector("#sound-off");
 const soundOnIcon = iconsEl.querySelector("#sound-on");
 
 const popupOverlayEl = document.querySelector('#popup-overlay');
-//popupOverlayEl.classList.add('hidden');
+const footerEl = document.querySelector('footer');
+
+let lastTurn;
+
+const svgInnerO = `<circle cx="50" cy="50" r="40" stroke="black" stroke-width="5" fill="none"></circle>`;
+const svgInnerX = `<line x1="20" y1="20" x2="80" y2="80" stroke="black" stroke-width="5"></line>
+<line x1="20" y1="80" x2="80" y2="20" stroke="black" stroke-width="5"></line>`;
+
+const gameModes = [Core.GameModes.vsHuman, Core.GameModes.vsAI];
+let turn = null;
+const game = new Core();
+// TODO: use this when restarting to begin the same type of gamemode
+let currentMode = gameModes[0];
+
+
+// Add event listeners
 popupOverlayEl.addEventListener('click',(evt)=>{
     evt.preventDefault();
     if(evt.target.id !== "popup-overlay")
@@ -21,41 +36,19 @@ popupOverlayEl.addEventListener('click',(evt)=>{
     setTimeout(()=>popupOverlayEl.classList.add('hidden'),300);
     
 })
-
-let lastTurn;
-
-if(audio.muted){
-    soundOnIcon.style.display = "none";
-    soundOffIcon.style.display = "inline-block";
-}else{
-    soundOnIcon.style.display = "inline-block";
-    soundOffIcon.style.display = "none";
-}
-
 iconsEl.addEventListener('click',evt=>iconsClickListener(evt));
 boardEl.addEventListener('click',evt=>boardClickListener(evt));
 
-const svgInnerO = `<circle cx="50" cy="50" r="40" stroke="black" stroke-width="5" fill="none"></circle>`;
-const svgInnerX = `<line x1="20" y1="20" x2="80" y2="80" stroke="black" stroke-width="5"></line>
-<line x1="20" y1="80" x2="80" y2="20" stroke="black" stroke-width="5"></line>`;
+// Begin in multiplayer by default
+beginMultiPlayerGame();
 
-
-const gameModes = [Core.GameModes.vsHuman, Core.GameModes.vsAI];
-let turn = null;
-const game = new Core();
-//let game;
-// TODO: use this when restarting to begin the same type of gamemode
-let currentMode = gameModes[0];
+// Defer audio load until after game is initialized for low-bandwith mobile connections
+asyncAddAudio();
 
 function beginMultiPlayerGame(){
-    //game = new Core();
     game.initializeGame(gameModes[0]);
     game.nextTurn(handleGame);
-    
 }
-//console.log(game.publicTestFunction2());
-
-beginMultiPlayerGame();
 
 function selfOrParentCheck(event,parentSelector){
     return event.target.matches(`${parentSelector}, ${parentSelector} *`);
@@ -64,16 +57,18 @@ function selfOrParentCheck(event,parentSelector){
 function iconsClickListener(evt){
     if(selfOrParentCheck(evt,"#sound-off")){
         // turn on audio, hide sound-off, show sound-on
-        audio.muted = false;
-        soundOffIcon.style.display="none";
-        audio.play();
-        soundOnIcon.style.display="inline-block";
+        if(!audioEl) return;
+        audioEl.muted = false;
+        soundOffIcon.classList.add("hidden");
+        audioEl.play();
+        soundOnIcon.classList.remove("hidden");
 
     }else if(selfOrParentCheck(evt,"#sound-on")){
         //console.log("sound on");
-        audio.muted = true;
-        soundOffIcon.style.display = "inline-block";
-        soundOnIcon.style.display = "none";
+        if(!audioEl) return;
+        audioEl.muted = true;
+        soundOffIcon.classList.remove("hidden");
+        soundOnIcon.classList.add("hidden");
     }else if(selfOrParentCheck(evt, "#settings")){
         showPopup();
         console.log("settings");
@@ -191,6 +186,40 @@ function draw(player,cell){
 }
 
 function showPopup(){
+    populatePopupDynamicFields();
     popupOverlayEl.classList.remove("hidden");
     setTimeout(()=>popupOverlayEl.style.opacity = "1",1);
+}
+
+function populatePopupDynamicFields(){
+    const modeText = popupOverlayEl.querySelector("#popup-game-mode-text");
+    modeText.innerText = currentMode === gameModes[0] ? "against another human" : "against computer";
+}
+
+function asyncAddAudio(){
+    const audio = document.createElement('audio');
+    audio.src = "assets/chill-abstract-intention-12099.mp3";
+    audio.muted = true;
+    audio.controls = false;
+    audio.autoplay = false;
+    audio.loop = true;
+    audio.style.display='none';
+
+    const link = document.createElement('a');
+    link.href = "assets/chill-abstract-intention-12099.mp3";
+    link.innerText = "direct link";
+
+    const text = document.createTextNode("Your browser doesn't seem to support <audio> tags. Here is a ");
+    audio.appendChild(text);
+    audio.appendChild(link);
+    audio.appendChild(document.createTextNode(" to the .mp3 file if you want to listen to it while playing"));
+
+    audio.oncanplaythrough = () => {
+        footerEl.querySelector("#music-attribution").classList.remove("hidden");
+        soundOffIcon.classList.remove("hidden");
+    }
+
+    audio.onerror = () => console.log("Audio load failed");
+    footerEl.appendChild(audio);
+    audioEl = audio;
 }
