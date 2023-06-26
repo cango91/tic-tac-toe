@@ -148,6 +148,23 @@ footer a{
     font-family: sans-serif;
 }
 
+#settings{
+    display: none;
+}
+
+@media screen and (max-width:443px){
+    #status{
+        display: block;
+        background-color: #cfb4b4;
+        border-radius: 0;
+        padding: 0;
+        margin-top: 0;
+        width: 100%;
+        right:0;
+        padding-right: 10px;
+    }
+}
+
 @media screen and (max-width:355px){
     .main-title{
         display: none;
