@@ -270,4 +270,4 @@ export default Object.freeze(class Core {
             winState: win
         });
     }
-})
+});
