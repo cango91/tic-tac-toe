@@ -183,6 +183,8 @@ footer a{
     overflow: auto;
     width: max-content;
     color:whitesmoke;
+    border: 2px solid white;
+    border-radius: 3%;
 
   }
   
