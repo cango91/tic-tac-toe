@@ -116,6 +116,7 @@ function render(boardState,msg,winCondtion = null){
 
 function paintWinCondition(winCondition){
     winCondition.forEach((coord)=>{
+        boardEl.querySelectorAll(`#sq${String(coord[0])+String(coord[1])}`).forEach(cell => cell.classList.add('animated-winner'));
         let winningSquare = boardEl.querySelectorAll(`#sq${String(coord[0])+String(coord[1])}>svg>*`);
         winningSquare.forEach(line=>line.setAttribute('stroke','red'));
     })
@@ -137,6 +138,7 @@ function enableBoard(){
     boardEl.classList.remove('disabled');
     for(const child of boardEl.children){
         child.classList.remove('disabled');
+        child.classList.remove('animated-winner');
     }
 }
 

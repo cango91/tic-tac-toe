@@ -152,6 +152,25 @@ footer a{
     display: none;
 }
 
+.animated-winner > svg {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+      stroke-opacity: 1;
+      transform: scale(100%);
+    }
+    50% {
+      stroke-opacity: 0.5;
+      transform: scale(105%);
+    }
+    100% {
+      stroke-opacity: 1;
+      transform: scale(100%);
+    }
+  }
+
 @media screen and (max-width:443px){
     #status{
         display: block;
