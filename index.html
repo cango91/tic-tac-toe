@@ -16,14 +16,18 @@
 <body>
     
     <header>
+        <div id="big-logo">
+            <img src="favicon.ico">
+        </div>
+        <h1 class="main-title">Tic Tac Toe</h1>
            
         <nav class="icons">
             <div id="game-logo">
                 <img src="favicon.ico" />
             </div>
-            <h1 class="main-title">Tic Tac Toe</h1>
-            <div id="sound-on" style="display: none;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="currentColor"
+            
+            <div id="sound-on">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="black"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="3vmax" height="3vmax">
                     <path d="M9 18V5l12-2v13" fill="none"></path>
                     <circle cx="6" cy="18" r="3"></circle>
@@ -31,7 +35,7 @@
                 </svg>
             </div>
             <div id="sound-off">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="currentColor"
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="black"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="3vmax" height="3vmax">
                     <path d="M9 18V5l12-2v13" fill="none"></path>
                     <circle cx="6" cy="18" r="3"></circle>
@@ -41,7 +45,7 @@
                 </svg>
             </div>
             <div id="settings">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="3vmax" height="3vmax">
 
                     <path fill="darkgray"
@@ -51,21 +55,18 @@
                 </svg>
             </div>
             <div id="restart">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="32" stroke-linecap="square" stroke-miterlimit="10" width="3vmax" height="3vmax">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="black" stroke-width="32" stroke-linecap="square" stroke-miterlimit="10" width="3vmax" height="3vmax">
                     <path d="M320,146s24.36-12-64-12A160,160,0,1,0,416,294"></path>
                     <polyline points="256 58 336 138 256 218"></polyline>
                 </svg>
             </div>
             <div id="status">
-                <b>Status: </b><span id="status-text"><small>X's turn</small></span>
+                <b>Status: </b><span id="status-text"></span>
             </div>
         </nav>
     </header>
 
     <main>
-
-
-
         <div id="board">
             <div id="sq00" class="filled"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
                     <line x1="20" y1="20" x2="80" y2="80" stroke="black" stroke-width="5" />

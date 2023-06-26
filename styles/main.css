@@ -2,6 +2,10 @@
     box-sizing:border-box;
 }
 
+:root{
+    --win-color: #1b7635;
+}
+
 body {
     display: flex;
     justify-content: center;
@@ -18,9 +22,11 @@ header {
     align-items: center;
     top: 0;
     width: 100%;
-    background-color: #cfb4b4;
+    /* background-color: #cfb4b4;* */
+    background-color: #b55f52;
     text-align: center;
     max-height: 20vh;
+    color:blanchedalmond;
 }
 
 main {
@@ -61,17 +67,17 @@ header h2{
     ;
 }
 
-#board>div:hover:not(.filled) {
+#board>div:hover:not(.filled):not(.disabled) {
     background-color: whitesmoke;
     background-image: radial-gradient(circle at center, whitesmoke, #c7c7c7);
     cursor: pointer;
 }
 
-#board>div.filled:hover {
+.disabled:hover, #board>div.filled:hover, #board>div.disabled:hover {
     cursor: not-allowed;
 }
 
-#board>div:active:not(.filled) {
+#board>div:active:not(.filled):not(.disabled) {
     background-color: #dddddd;
     background-image: none;
 }
@@ -110,6 +116,12 @@ header h2{
     display: none;
 }
 
+#big-logo{
+    display: none;
+
+}
+
+
 footer{
     margin-top: 20px;
     color: #dddddd;
@@ -134,6 +146,28 @@ footer a{
 
 #status-text{
     font-family: sans-serif;
+}
+
+@media screen and (max-width:355px){
+    .main-title{
+        display: none;
+    }
+    #big-logo{
+        display: block;
+    }
+    #big-logo img{
+        width: 50px;
+    }
+    #status{
+        display: block;
+        background-color: #cfb4b4;
+        border-radius: 0;
+        padding: 0;
+        margin-top: 0;
+        width: 100%;
+        right:0;
+        padding-right: 10px;
+    }
 }
 
 
@@ -209,6 +243,9 @@ footer a{
         float: left;
         position: fixed;
     }
+    #big-logo{
+        display: none;
+    }
     #game-logo > img{
         height: 3vmax;;
     }
@@ -220,3 +257,15 @@ footer a{
         margin-top: 10px;
     }
 }
+
+/* @media  screen and (min-width:322px) and (min-height:400px) {
+    #big-logo{
+        display: block;
+        position: absolute;
+        float: left;
+        margin: 1.5vmax 0 0 0.5vmax;
+    }
+    #big-logo img {
+        width: 5vmax;
+    }    
+} */
