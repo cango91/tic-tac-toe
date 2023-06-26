@@ -132,6 +132,10 @@ export default Object.freeze(class Core {
     }
 
     #makeMove(player, row, col) {
+        // this is an unnecessary test (therefore the OutOfTurnError is unnecessary) since we track #turn internally and don't accept a player argument from the main.js (controller)
+        // if(player !== this.#turn){
+        //     throw new this.#OutOfTurnError(`Player ${player > 0 ? 'X' : 'O'} tried to make a move, but it's not their turn`);
+        // }
         if (this.#boardState[row][col] !== null) {
             throw new this.#IllegalMoveError(`Can't make a move on cell ${row},${col}, it is already occupied by ${this.#boardState[row][col]}`);
         }
@@ -151,6 +155,7 @@ export default Object.freeze(class Core {
         }
     }
 
+    // This error doesn't make sense currently. Keeping it just in case I need it when implementing vsAI, but probably won't
     #OutOfTurnError = class OutOfTurnError extends Error {
         constructor(msg) {
             super(msg);
