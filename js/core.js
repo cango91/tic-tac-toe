@@ -100,6 +100,9 @@ export default Object.freeze(class Core {
         [[2, 0], [1, 1], [0, 2]]
     ];
 
+    #winConditionsBitboards = [7, 56, 448, 73, 146, 292, 273, 84];
+    #tieConditionBitboard = 511;
+
     #initPlayers(xController, oController) {
         if (Object.values(Core.PlayerControllers).includes(xController) && Object.values(Core.PlayerControllers).includes(oController)) {
             this.#players = {
@@ -198,6 +201,13 @@ export default Object.freeze(class Core {
         }
     }
 
+    #InvalidBitboardStateError = class InvalidBitboardStateError extends Error {
+        constructor(msg) {
+            super(msg);
+            this.name = "Invalid Bitboard State Error";
+        }
+    }
+
     /* Public Methods */
     constructor() {
         this.#initBoard();
@@ -223,7 +233,14 @@ export default Object.freeze(class Core {
     }
 
     publicTestFunction2() {
-        return this.#checkWinConditions();
+        const result = [];
+        // winConditions to bitBoards:
+        this.#winConditions.forEach((condition) => {
+            const arr = Array(3).fill(null).map(() => Array(3).fill(null));
+            condition.forEach((coord) => arr[coord[0]][coord[1]] = 1);
+            result.push(this.arrayToBitboards(arr)[0]);
+        })
+        return result;
     }
     /**
      * 
@@ -303,4 +320,18 @@ export default Object.freeze(class Core {
         }
         return array;
     }
-});
+
+    minimax(bitboardX, bitboardO, xTurn) {
+        // first, we'll check for winconditions and terminal states(no-win bitboardX|bitboardO is 9 full bits) return score if finished
+        for (let cond of this.#winConditionsBitboards) {
+            if ((bitboardO & cond) === cond)
+                return xTurn ? -1 : 1;
+            if ((bitboardX & cond) === cond)
+                return xTurn ? 1 : -1;
+        }
+        if ((bitboardO | bitboardX) === this.#tieConditionBitboard)
+            return 0;
+        
+    }
+
+}); 

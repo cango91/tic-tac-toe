@@ -11,6 +11,8 @@ const audio = document.querySelector('audio');
 const soundOffIcon = iconsEl.querySelector("#sound-off");
 const soundOnIcon = iconsEl.querySelector("#sound-on");
 
+let lastTurn;
+
 if(audio.muted){
     soundOnIcon.style.display = "none";
     soundOffIcon.style.display = "inline-block";
@@ -40,6 +42,7 @@ function beginMultiPlayerGame(){
     game.nextTurn(handleGame);
     
 }
+//console.log(game.publicTestFunction2());
 
 beginMultiPlayerGame();
 
@@ -80,14 +83,16 @@ function boardClickListener(evt){
     }else{
         return;
     }
+    lastTurn = turn;
     game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]);
 }
 
 
 function handleGame(turnState){
     //console.log(turnState);
-    console.log(game.arrayToBitboards(turnState.boardState));
-    console.log(game.bitboardsToArray(...game.arrayToBitboards(turnState.boardState)));
+    // console.log(game.arrayToBitboards(turnState.boardState));
+    // console.log(game.bitboardsToArray(...game.arrayToBitboards(turnState.boardState)));
+    console.log(game.minimax(...game.arrayToBitboards(turnState.boardState), lastTurn === 1 ? true : false));
     const msg ={};
     // if game is finished
     if(turnState.gameState === Core.GameStates.finished){
