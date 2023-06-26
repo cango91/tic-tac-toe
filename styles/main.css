@@ -274,15 +274,3 @@ footer a{
         margin-top: 10px;
     }
 }
-
-/* @media  screen and (min-width:322px) and (min-height:400px) {
-    #big-logo{
-        display: block;
-        position: absolute;
-        float: left;
-        margin: 1.5vmax 0 0 0.5vmax;
-    }
-    #big-logo img {
-        width: 5vmax;
-    }    
-} */

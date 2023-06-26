@@ -94,7 +94,7 @@ function handleGame(turnState){
             msg.color = "var(--win-color)";
             msg.text = `<b>Player ${turnState.winState.winner>0 ? 'X' : 'O'} WINS!</b>`;
         }else{
-            msg.text = "It's a tie &#10707;";
+            msg.text = "<b>It's a tie &#10707;</b>";
             msg.color = "brown";
         }
     }else if(turnState.gameState === Core.GameStates.waitingForAI){
@@ -102,7 +102,7 @@ function handleGame(turnState){
     }else if(turnState.gameState === Core.GameStates.waitingForHuman){
         // set turn
         turn = turnState.turn;
-        msg.text = `Player ${turn === -1 ? 'O' : 'X'}'s turn`
+        msg.text = `Player <b>${turn === -1 ? 'O' : 'X'}</b> turn`
     }
     render(turnState.boardState,msg,turnState.winState.winningCondition);
 }
