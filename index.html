@@ -14,29 +14,29 @@
 </head>
 
 <body>
-    
+
     <header>
         <div id="big-logo">
             <img src="favicon.ico">
         </div>
         <h1 class="main-title">Tic Tac Toe</h1>
-           
+
         <nav class="icons">
             <div id="game-logo">
                 <img src="favicon.ico" />
             </div>
-            
+
             <div id="sound-on">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="black"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="3vmax" height="3vmax">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="black" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" width="3vmax" height="3vmax">
                     <path d="M9 18V5l12-2v13" fill="none"></path>
                     <circle cx="6" cy="18" r="3"></circle>
                     <circle cx="18" cy="16" r="3"></circle>
                 </svg>
             </div>
             <div id="sound-off">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="black"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="3vmax" height="3vmax">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" stroke="black" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" width="3vmax" height="3vmax">
                     <path d="M9 18V5l12-2v13" fill="none"></path>
                     <circle cx="6" cy="18" r="3"></circle>
                     <circle cx="18" cy="16" r="3"></circle>
@@ -45,8 +45,8 @@
                 </svg>
             </div>
             <div id="settings">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="3vmax" height="3vmax">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" width="3vmax" height="3vmax">
 
                     <path fill="darkgray"
                         d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06 .06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V22a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H2a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06c.5.5 1.37.6 1.82.33a1.65 1.65 0 0 0 1-1.51V2a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H22a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
@@ -55,7 +55,8 @@
                 </svg>
             </div>
             <div id="restart">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="black" stroke-width="32" stroke-linecap="square" stroke-miterlimit="10" width="3vmax" height="3vmax">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" stroke="black"
+                    stroke-width="32" stroke-linecap="square" stroke-miterlimit="10" width="3vmax" height="3vmax">
                     <path d="M320,146s24.36-12-64-12A160,160,0,1,0,416,294"></path>
                     <polyline points="256 58 336 138 256 218"></polyline>
                 </svg>
@@ -89,25 +90,47 @@
             </div>
         </div>
     </main>
+    <div id="popup-overlay">
+        <div id="popup">
+          <div class="popup-content">
+            <h2>Title</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tincidunt arcu. Sed quis purus auctor, interdum odio sed, consequat justo. Ut varius ipsum non mi dapibus rutrum.</p>
+          </div>
+          <div class="popup-content">
+            <h2>Subtitle</h2>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque mattis felis dolor, eu auctor dolor tincidunt et.</p>
+          </div>
+          <div class="popup-content">
+            <h2>Content with Long Text</h2>
+            <p>Phasellus egestas aliquet velit sit amet semper. Curabitur feugiat enim at massa finibus dignissim. Aliquam id nulla ac eros tristique efficitur sed ut odio.</p>
+            <p>Quisque in dolor nec neque dignissim scelerisque a in tellus. Aliquam erat volutpat. Curabitur eget consectetur ipsum.</p>
+            <p>Donec non mi tristique, gravida lectus id, hendrerit tellus. Nulla vestibulum sapien eget mi dapibus, sit amet dictum turpis fringilla.</p>
+            <p>Maecenas malesuada tellus a rhoncus malesuada. Suspendisse vitae arcu cursus, eleifend elit ut, facilisis metus.</p>
+            <p>In consectetur magna vitae nulla congue malesuada. Suspendisse semper mi eget elementum aliquam.</p>
+            <p>Curabitur vel quam ac elit tristique eleifend vitae quis nunc. Morbi tempus tincidunt tortor, id semper nunc maximus vitae.</p>
+          </div>
+        </div>
+      </div>
 </body>
 <footer>
     <audio src="assets/chill-abstract-intention-12099.mp3" muted loop>Your browser doesn't support audio. Here is a <a
-        href="./assets/chill-abstract-intention-12099.mp3">link</a> to the background mp3 if you'd like to listen to while
-      playing</audio>
+            href="./assets/chill-abstract-intention-12099.mp3">link</a> to the background mp3 if you'd like to listen to
+        while
+        playing</audio>
     <p>Music by <a
-        href="https://pixabay.com/users/coma-media-24399569/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=12099">Coma-Media</a>
-      from <a
-        href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=12099">Pixabay</a>
+            href="https://pixabay.com/users/coma-media-24399569/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=12099">Coma-Media</a>
+        from <a
+            href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=12099">Pixabay</a>
     </p>
     <p>
-      <a href="https://iconscout.com/icons/game" target="_blank">Free Game Icon</a> by <a
-        href="https://iconscout.com/contributors/mcgandhi61">Mohit Gandhi</a> on <a
-        href="https://iconscout.com">IconScout</a>
-      <a href="https://fontawesomeicons.com/arrow-rotate-right">Refresh icon</a> by <a
-        href="https://fontawesomeicons.com/">Font Awesome Icons</a>. <a
-        href="https://chat.openai.com/share/a696aba0-88c5-41f3-8d95-2f46ba3db397">Sound on/off <span
-          style="display:none;">and settings </span>icons</a> by <a href="https://openai.com/">OpenAI's</a> GPT-4.
+        <a href="https://iconscout.com/icons/game" target="_blank">Free Game Icon</a> by <a
+            href="https://iconscout.com/contributors/mcgandhi61">Mohit Gandhi</a> on <a
+            href="https://iconscout.com">IconScout</a>
+        <a href="https://fontawesomeicons.com/arrow-rotate-right">Refresh icon</a> by <a
+            href="https://fontawesomeicons.com/">Font Awesome Icons</a>. <a
+            href="https://chat.openai.com/share/a696aba0-88c5-41f3-8d95-2f46ba3db397">Sound on/off <span
+                style="display:none;">and settings </span>icons</a> by <a href="https://openai.com/">OpenAI's</a> GPT-4.
     </p>
-  </footer>
+</footer>
 
 </html>

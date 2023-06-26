@@ -11,6 +11,17 @@ const audio = document.querySelector('audio');
 const soundOffIcon = iconsEl.querySelector("#sound-off");
 const soundOnIcon = iconsEl.querySelector("#sound-on");
 
+const popupOverlayEl = document.querySelector('#popup-overlay');
+//popupOverlayEl.classList.add('hidden');
+popupOverlayEl.addEventListener('click',(evt)=>{
+    evt.preventDefault();
+    if(evt.target.id !== "popup-overlay")
+        return;
+    popupOverlayEl.style.opacity = "0";
+    setTimeout(()=>popupOverlayEl.classList.add('hidden'),300);
+    
+})
+
 let lastTurn;
 
 if(audio.muted){
@@ -64,6 +75,7 @@ function iconsClickListener(evt){
         soundOffIcon.style.display = "inline-block";
         soundOnIcon.style.display = "none";
     }else if(selfOrParentCheck(evt, "#settings")){
+        showPopup();
         console.log("settings");
     }else if(selfOrParentCheck(evt,"#restart")){
         currentMode === gameModes[0] ? beginMultiPlayerGame() : console.log('not implemented');
@@ -176,4 +188,9 @@ function draw(player,cell){
         default:
             console.error("Can't draw");
     }
+}
+
+function showPopup(){
+    popupOverlayEl.classList.remove("hidden");
+    setTimeout(()=>popupOverlayEl.style.opacity = "1",1);
 }
