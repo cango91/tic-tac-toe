@@ -86,6 +86,8 @@ function boardClickListener(evt){
 
 function handleGame(turnState){
     //console.log(turnState);
+    console.log(game.arrayToBitboards(turnState.boardState));
+    console.log(game.bitboardsToArray(...game.arrayToBitboards(turnState.boardState)));
     const msg ={};
     // if game is finished
     if(turnState.gameState === Core.GameStates.finished){

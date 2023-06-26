@@ -147,7 +147,7 @@ export default Object.freeze(class Core {
     }
 
     /* Custom Error Classes */
-    
+
     #InvalidPlayerError = class InvalidPlayerError extends Error {
         constructor(msg) {
             super(msg);
@@ -163,15 +163,15 @@ export default Object.freeze(class Core {
         }
     }
 
-    #InvalidGameStateError = class InvalidGameStateError extends Error{
-        constructor(msg){
+    #InvalidGameStateError = class InvalidGameStateError extends Error {
+        constructor(msg) {
             super(msg);
             this.name = "Invalid Game State Error";
         }
     }
 
-    #NotImplementedError = class NotImplementedError extends Error{
-        constructor(msg){
+    #NotImplementedError = class NotImplementedError extends Error {
+        constructor(msg) {
             super(msg);
             this.name = "Not Implemented Error";
         }
@@ -191,8 +191,8 @@ export default Object.freeze(class Core {
         }
     }
 
-    #InvalidGameModeError = class InvalidGameModeError extends Error{
-        constructor(msg){
+    #InvalidGameModeError = class InvalidGameModeError extends Error {
+        constructor(msg) {
             super(msg);
             this.name = "Invalid Game Mode";
         }
@@ -207,11 +207,11 @@ export default Object.freeze(class Core {
      * (Re-)initializes the game for the provided mode
      * @param {Symbol} mode - game mode to initialize: must be a valid Symbol from Core.GameModes
      */
-    initializeGame(mode){
-        switch(mode){
+    initializeGame(mode) {
+        switch (mode) {
             case Core.GameModes.vsHuman:
                 this.#gameMode = mode;
-                this.#initPlayers(Core.PlayerControllers.human,Core.PlayerControllers.human);
+                this.#initPlayers(Core.PlayerControllers.human, Core.PlayerControllers.human);
                 break;
             case Core.GameModes.vsAI:
                 throw new this.#NotImplementedError("This feature is not yet implemented");
@@ -231,19 +231,19 @@ export default Object.freeze(class Core {
      * Its parameter should an object with members: gameState, boardState, turn, winState{winner, winningCondition}
      * @param  {...any} move row, col for next move. Can be null if it's AI's turn.
      */
-    nextTurn(callback,...move) {
-        switch(this.#gameMode){
+    nextTurn(callback, ...move) {
+        switch (this.#gameMode) {
             case Core.GameModes.vsHuman:
-                switch(this.#gameState){
+                switch (this.#gameState) {
                     case Core.GameStates.initialized:
                         // Game has just been initialized.
                         // Randomly decide who begins
-                        this.#setTurn(Math.random()<0.5 ? -1 : 1);
+                        this.#setTurn(Math.random() < 0.5 ? -1 : 1);
                         this.#gameState = Core.GameStates.waitingForHuman;
                         break;
                     case Core.GameStates.waitingForHuman:
                         // Try requested move
-                        this.#makeMove(this.#turn,move[0],move[1]);
+                        this.#makeMove(this.#turn, move[0], move[1]);
                         break;
                     default:
                         throw new this.#InvalidGameStateError();
@@ -256,10 +256,10 @@ export default Object.freeze(class Core {
         }
         // check for win conditions
         const win = this.#checkWinConditions();
-        if(win.winner !== null){
+        if (win.winner !== null) {
             this.#gameState = Core.GameStates.finished;
             this.#turn = null;
-        }else{
+        } else {
             // set next turn
             this.#setTurn(this.#turn * -1);
         }
@@ -269,5 +269,38 @@ export default Object.freeze(class Core {
             turn: this.#turn,
             winState: win
         });
+    }
+    /**
+    * Converts the 2d array representation to bitboards for x and o respectively
+    * @param {Array} array - A 2D array representing the board state. 1 for 'O', 1 for 'X' and null for empty
+    * @returns {Array} - The bitboard representation for [x,o]
+    */
+    arrayToBitboards(array) {
+        let bitboardX = 0, bitboardO = 0;
+        for (let i = 0; i < 9; i++) {
+            const [rowId, colId] = [Math.floor(i / 3), i % 3];
+            if (array[rowId][colId] === 1)
+                bitboardX |= (1 << i);
+            else if (array[rowId][colId] === -1)
+                bitboardO |= (1 << i);
+        }
+        return [bitboardX, bitboardO];
+    }
+    /**
+ * 
+ * @param {Number} bitboardX - bitboard representation of x-occupied squares
+ * @param {Number} bitboardO - bitboard representation of o-occupied squares
+ * @returns {Array} - 2D array representing board state, null -> empty, 1 -> X, -1 -> O
+ */
+    bitboardsToArray(bitboardX, bitboardO) {
+        const array = Array(3).fill(null).map(() => Array(3).fill(null));
+        for (let i = 0; i < 9; i++) {
+            const [rowId, colId] = [Math.floor(i / 3), i % 3];
+            if ((1 << i) & bitboardX)
+                array[rowId][colId] = 1;
+            else if ((1 << i) & bitboardO)
+                array[rowId][colId] = -1;
+        }
+        return array;
     }
 });
