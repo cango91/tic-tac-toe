@@ -316,7 +316,9 @@ ol{
 .popup-content h2{
     font-family: 'Press Start 2P', cursive;
 }
-
+#click-to-toggle:hover {
+    cursor: pointer;
+}
 @keyframes pulse {
     0% {
       stroke-opacity: 1;

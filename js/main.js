@@ -27,10 +27,7 @@ const popupApplyBtn = popupOverlayEl.querySelector("#apply-btn");
 const footerEl = document.querySelector('footer');
 
 let lastTurn;
-/*
-<circle cx="50" cy="50" r="40" stroke="white" stroke-width="15" fill="none">
-                                    </circle>
-*/
+
 const svgInnerO = `<circle cx="50" cy="50" r="40" stroke="black" stroke-width="5" fill="none"></circle>`;
 const svgInnerX = `<line x1="20" y1="20" x2="80" y2="80" stroke="black" stroke-width="5"></line>
 <line x1="20" y1="80" x2="80" y2="20" stroke="black" stroke-width="5"></line>`;
@@ -74,7 +71,7 @@ popupOverlayEl.addEventListener('click', (evt) => {
             toggleAIOptions();
             showApplyChangesBtn(optionsChanged());
         }
-        if(selfOrParentCheck(evt,"#ai-symbol")){
+        if(selfOrParentCheck(evt,"#ai-symbol")||selfOrParentCheck(evt,"#click-to-toggle")){
             toggleAISymbol();
             showApplyChangesBtn(optionsChanged());
         }
