@@ -25,7 +25,7 @@ const aiOpponents = [Core.AIStrategies.rando, Core.AIStrategies.dumbo, Core.AISt
 let turn = null;
 const game = new Core();
 // TODO: use this when restarting to begin the same type of gamemode
-let currentMode = gameModes[0];
+let currentMode = gameModes[1];
 let currentOppopnent = aiOpponents[0];
 
 
@@ -81,7 +81,7 @@ function iconsClickListener(evt){
         showPopup();
         console.log("settings");
     }else if(selfOrParentCheck(evt,"#restart")){
-        currentMode === gameModes[0] ? beginMultiPlayerGame() : console.log('not implemented');
+        currentMode === gameModes[0] ? beginMultiPlayerGame() : beginSinglePlayerGame();
         enableBoard();
     }else{
         return;
@@ -98,12 +98,12 @@ function boardClickListener(evt){
     }else{
         return;
     }
-    if(turn === 1) game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]);
+    if(turn === 1) game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]).then(()=>console.log("move sent")).catch((err)=>console.log(err));
 }
 
 
 function handleGame(turnState){
-     console.log(turnState);
+    //console.log(turnState);
     const msg ={};
     // if game is finished
     if(turnState.gameState === Core.GameStates.finished){
@@ -119,20 +119,23 @@ function handleGame(turnState){
         // set turn
         turn = turnState.turn;
         boardEl.classList.remove('ai-turn');
+    }
+    if(turnState.gameState !== Core.GameStates.finished){
         msg.text = `Player <b>${turn === -1 ? 'O' : 'X'}</b> turn`
     }
-    render(turnState.boardState,msg,turnState.winState.winningCondition);
+    
 
     if(turnState.gameState === Core.GameStates.waitingForAI){
         turn = turnState.turn;
         boardEl.classList.add("ai-turn");
-        return game.nextTurn(handleGame);
+        msg.text = `Player <b>${turn === -1 ? 'O' : 'X'}</b> turn`
+        game.nextTurn(handleGame)
+            .then(()=>console.log("AI has made its move"))
+            .catch((err)=>console.log(err));
     }
+    render(turnState.boardState,msg,turnState.winState.winningCondition);
 }
 
-function iter(){
-    game.nextTurn(handleGame);
-}
 
 function render(boardState,msg,winCondtion = null){
     renderStatus(msg);
