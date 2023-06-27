@@ -27,7 +27,10 @@ const popupApplyBtn = popupOverlayEl.querySelector("#apply-btn");
 const footerEl = document.querySelector('footer');
 
 let lastTurn;
-
+/*
+<circle cx="50" cy="50" r="40" stroke="white" stroke-width="15" fill="none">
+                                    </circle>
+*/
 const svgInnerO = `<circle cx="50" cy="50" r="40" stroke="black" stroke-width="5" fill="none"></circle>`;
 const svgInnerX = `<line x1="20" y1="20" x2="80" y2="80" stroke="black" stroke-width="5"></line>
 <line x1="20" y1="80" x2="80" y2="20" stroke="black" stroke-width="5"></line>`;
@@ -38,7 +41,7 @@ const symbols = { x: 1, o: -1 };
 let turn = null;
 const game = new Core();
 
-let defaultMode = gameModes[1];
+let defaultMode = gameModes[0];
 let defaultOpponent = aiOpponents[0];
 let defaultAiSymbol = symbols.o;
 const gameOptions = {
@@ -59,20 +62,25 @@ popupOverlayEl.addEventListener('click', (evt) => {
         evt.target.id !== "apply-btn" && 
         evt.target.parentNode.id !== "apply-btn"
     ) {
-        if (evt.target.id === "popup-toggle-game-mode-btn-on" ||
-            evt.target.id === "popup-toggle-game-mode-btn-off" ||
-            evt.target.parentNode.id === "popup-toggle-game-mode-btn-on" ||
-            evt.target.parentNode.id === "popup-toggle-game-mode-btn-off" ||
-            evt.target.parentNode.parentNode.id === "popup-toggle-game-mode-btn-on" ||
-            evt.target.parentNode.parentNode.id === "popup-toggle-game-mode-btn-off"
+        if ( selfOrParentCheck(evt,"#popup-toggle-game-mode-btn-on") || 
+                selfOrParentCheck(evt,"#popup-toggle-game-mode-btn-off")
+            // evt.target.id === "popup-toggle-game-mode-btn-on" ||
+            // evt.target.id === "popup-toggle-game-mode-btn-off" ||
+            // evt.target.parentNode.id === "popup-toggle-game-mode-btn-on" ||
+            // evt.target.parentNode.id === "popup-toggle-game-mode-btn-off" ||
+            // evt.target.parentNode.parentNode.id === "popup-toggle-game-mode-btn-on" ||
+            // evt.target.parentNode.parentNode.id === "popup-toggle-game-mode-btn-off"
         ) {
             toggleAIOptions();
             showApplyChangesBtn(optionsChanged());
         }
+        if(selfOrParentCheck(evt,"#ai-symbol")){
+            toggleAISymbol();
+            showApplyChangesBtn(optionsChanged());
+        }
+        
         return;
     }
-
-    //console.log(optionsChanged());
     popupOverlayEl.style.opacity = "0";
     setTimeout(() => popupOverlayEl.classList.add('hidden'), 300);
     if(evt.target.id === "apply-btn" || evt.target.parentNode.id === "apply-btn"){
@@ -90,24 +98,10 @@ popupOverlayEl.addEventListener('click', (evt) => {
 iconsEl.addEventListener('click', evt => iconsClickListener(evt));
 boardEl.addEventListener('click', evt => boardClickListener(evt));
 
-// Begin in multiplayer by default
-//beginMultiPlayerGame();
-//beginSinglePlayerGame();
+
 beginGame();
 // Defer audio load until after game is initialized for low-bandwith mobile connections
 asyncAddAudio();
-
-// function beginMultiPlayerGame() {
-//     turn = null;
-//     game.initializeGame(gameModes[0]);
-//     game.nextTurn(handleGame);
-// }
-
-// function beginSinglePlayerGame() {
-//     turn = null;
-//     game.initializeGame(gameOptions.gameMode, gameOptions.opponent, gameOptions.aiSymbol);
-//     game.nextTurn(handleGame);
-// }
 
 function beginGame(){
     game.initializeGame(gameOptions.gameMode, gameOptions.opponent, gameOptions.aiSymbol);
@@ -120,15 +114,12 @@ function selfOrParentCheck(event, parentSelector) {
 
 function iconsClickListener(evt) {
     if (selfOrParentCheck(evt, "#sound-off")) {
-        // turn on audio, hide sound-off, show sound-on
         if (!audioEl) return;
         audioEl.muted = false;
         soundOffIcon.classList.add("hidden");
         audioEl.play();
         soundOnIcon.classList.remove("hidden");
-
     } else if (selfOrParentCheck(evt, "#sound-on")) {
-        //console.log("sound on");
         if (!audioEl) return;
         audioEl.muted = true;
         soundOffIcon.classList.remove("hidden");
@@ -136,9 +127,7 @@ function iconsClickListener(evt) {
     } else if (selfOrParentCheck(evt, "#settings")) {
         showApplyChangesBtn(false);
         showPopup();
-        //console.log("settings");
     } else if (selfOrParentCheck(evt, "#restart")) {
-        //gameOptions.gameMode === gameModes[0] ? beginMultiPlayerGame() : beginSinglePlayerGame();
         beginGame();
         enableBoard();
     } else {
@@ -163,7 +152,6 @@ function boardClickListener(evt) {
 
 
 function handleGame(turnState) {
-    //console.log(turnState);
     const msg = {};
     // if game is finished
     if (turnState.gameState === Core.GameStates.finished) {
@@ -274,21 +262,14 @@ function populatePopupDynamicFields() {
     switch (previousOptions.gameMode) {
         case gameModes[0]:
             modeText.innerText = "against another human";
-            // toggleOff.classList.remove("hidden");
-            // toggleOn.classList.add("hidden")
-            // vsAiText.classList.add("popup-soft");
-            // vsHumanText.classList.remove("popup-soft");
             toggleAIOptions(false);
             break;
         case gameModes[1]:
             modeText.innerText = "against computer";
-            // toggleOff.classList.add("hidden");
-            // toggleOn.classList.remove("hidden");
-            // vsAiText.classList.remove("popup-soft");
-            // vsHumanText.classList.add("popup-soft");
             toggleAIOptions(true);
             break;
     }
+    toggleAISymbol(gameOptions.aiSymbol);
 }
 
 function asyncAddAudio() {
@@ -377,7 +358,19 @@ function toggleAIOptions(show = null) {
         vsAiText.classList.remove("popup-soft");
         vsHumanText.classList.add("popup-soft");
         gameOptions.gameMode = gameModes[1];
+        aiOpponentsEl.classList.remove("hidden");
     }
+}
+
+function toggleAISymbol(sym=null){
+    const svg = aiSymbolEl.querySelector("svg");
+    const symbolToShow = sym ? sym : gameOptions.aiSymbol *-1;
+    svg.style.color="white";
+    svg.innerHTML = symbolToShow > 0 ? svgInnerX : svgInnerO;
+    for(let ch of svg.children){
+        ch.style.strokeWidth = "15";
+    }
+    if (!sym) gameOptions.aiSymbol *= -1;
 }
 
 function showApplyChangesBtn(show = false) {

@@ -181,7 +181,7 @@ footer a{
     background:#93554c;
     padding: 20px;
     overflow: auto;
-    width: max-content;
+    width:fit-content;
     color:whitesmoke;
     border: 2px solid white;
     border-radius: 3%;
@@ -264,8 +264,17 @@ footer a{
 #ai-symbol-div{
     font-family: 'Press Start 2P', cursive;
     font-weight: 400;
-    padding-top: 5px;
+    /*padding-top: 5px;*/
     font-size: 8pt;
+}
+
+#ai-symbol-div svg *{
+    stroke: white;
+
+
+}
+#ai-symbol svg{
+    transform: scale(1.8);
 }
 
 #ai-symbol:hover{
@@ -273,13 +282,39 @@ footer a{
 }
 
 #ai-symbol:hover svg{
-    transform:scale(1.5);
+    transform:scale(2);
     transition: transform 0.3s ease-in-out;
 }
 
 #ai-options {
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
+}
+
+#ai-opponents h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12pt;
+}
+#ai-opponents p {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10pt;
+}
+
+#ai-opponents li{
+    list-style-type: none;
+    text-indent: 0;
+}
+
+#ai-opponents li p{
+    text-indent: 0;
+
+}
+ol{
+    padding: 0;
+}
+
+.popup-content h2{
+    font-family: 'Press Start 2P', cursive;
 }
 
 @keyframes pulse {

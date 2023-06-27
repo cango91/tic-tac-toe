@@ -168,14 +168,24 @@ export default Object.freeze(class Core {
                     throw new this.#InvalidPlayerControllerError();
                 switch (this.#aiStrategy) {
                     case Core.AIStrategies.rando:
-                        let [xBoard, oBoard] = this.arrayToBitboards(this.#boardState);
-                        let emptyBoard = ~(xBoard | oBoard);
-                        let rand;
-                        do {
-                            rand = Math.floor(Math.random() * 9);
-                            //console.log(rand, (xBoard | oBoard).toString(2), (1 << rand).toString(2));
-                        } while ((emptyBoard & (1 << rand)) === 0)
-                        this.#makeMove(this.#turn, Math.floor(rand / 3), rand % 3);
+                        // let [xBoard, oBoard] = this.arrayToBitboards(this.#boardState);
+                        // let emptyBoard = ~(xBoard | oBoard);
+                        // let rand;
+                        // do {
+                        //     rand = Math.floor(Math.random() * 9);
+                        //     //console.log(rand, (xBoard | oBoard).toString(2), (1 << rand).toString(2));
+                        // } while ((emptyBoard & (1 << rand)) === 0)
+                        let availableCells = [];
+                        for (let row = 0; row < 3; row++) {
+                            for (let col = 0; col < 3; col++) {
+                                if (this.#boardState[row][col] === null) {
+                                    availableCells.push([row, col]);
+                                }
+                            }
+                        }
+                        let selectedCell = availableCells[Math.floor(Math.random() * availableCells.length)];
+                        //this.#makeMove(this.#turn, Math.floor(rand / 3), rand % 3);
+                        this.#makeMove(this.#turn, selectedCell[0],selectedCell[1]);
                         break;
                     default:
                         throw this.#NotImplementedError();
