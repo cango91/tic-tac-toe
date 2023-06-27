@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 </head>
 
@@ -92,22 +93,52 @@
     </main>
     <div id="popup-overlay" class="hidden">
         <div id="popup">
-          <div class="popup-content">
-            <h2>Options</h2>
-            <p>You are currently playing <span id="popup-game-mode-text"></span>. Below, you can change game mode or difficulty.<br /><strong>Please note, switching game modes or opponents will restart your game!</strong></p>
-          </div>
-          <div class="popup-content">
-            <hr>
-            <h2>Content with Long Text</h2>
-            <p>Phasellus egestas aliquet velit sit amet semper. Curabitur feugiat enim at massa finibus dignissim. Aliquam id nulla ac eros tristique efficitur sed ut odio.</p>
-            <p>Quisque in dolor nec neque dignissim scelerisque a in tellus. Aliquam erat volutpat. Curabitur eget consectetur ipsum.</p>
-            <p>Donec non mi tristique, gravida lectus id, hendrerit tellus. Nulla vestibulum sapien eget mi dapibus, sit amet dictum turpis fringilla.</p>
-            <p>Maecenas malesuada tellus a rhoncus malesuada. Suspendisse vitae arcu cursus, eleifend elit ut, facilisis metus.</p>
-            <p>In consectetur magna vitae nulla congue malesuada. Suspendisse semper mi eget elementum aliquam.</p>
-            <p>Curabitur vel quam ac elit tristique eleifend vitae quis nunc. Morbi tempus tincidunt tortor, id semper nunc maximus vitae.</p>
-          </div>
+            <div id="popup-close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-x-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path
+                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+            </div>
+            <div class="popup-content">
+                <h2>Options</h2>
+                <p>You are currently playing <u><strong><span id="popup-game-mode-text"></span>.</strong></u> Below, you
+                    can change game mode or difficulty.</p>
+                <p><strong>Please note, <i>switching game modes </i>or<i> opponents</i> <u><i>will restart your
+                                game!</i></u></strong></p>
+            </div>
+            <div class="popup-content">
+                <hr>
+                <h2>Game Mode</h2>
+                <div class="popup-game-mode">
+                    <span id="popup-vs-human">vs Human</span><br /><span id="popup-toggle-game-mode-btn-off"
+                        class="hidden"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" class="bi bi-toggle-off" viewBox="0 0 16 16">
+                            <path
+                                d="M11 4a4 4 0 0 1 0 8H8a4.992 4.992 0 0 0 2-4 4.992 4.992 0 0 0-2-4h3zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5z" />
+                        </svg></span><span id="popup-toggle-game-mode-btn-on" class="hidden"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-toggle-on" viewBox="0 0 16 16">
+                            <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10H5zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" />
+                        </svg></span><span id="popup-vs-ai"><br />vs AI</span>
+                    <div id="ai-options">
+                        <div id="ai-symbol-div">
+                            AI will play: <span id="ai-symbol"><svg xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 100 100" width="12">
+                                    <circle cx="50" cy="50" r="40" stroke="white" stroke-width="15" fill="none">
+                                    </circle>
+                                </svg></span>
+                        </div>
+                        <div id="ai-opponents">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-container"><div id="apply-btn">Apply</div> </div> 
         </div>
-      </div>
+    </div>
 </body>
 <footer>
     <p id="music-attribution" class="hidden">Music by <a

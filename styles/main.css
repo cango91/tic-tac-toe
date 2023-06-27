@@ -214,6 +214,74 @@ footer a{
     cursor: wait;
 }
 
+#popup-close-btn{
+    position: absolute;
+    top:0;
+    right: 0;
+    padding:5px 5px 0 5px;
+    border-radius: 30%;
+}
+
+#popup-close-btn:hover {
+    background-color: #cfb4b4;
+    color: #323041;
+    cursor: pointer;
+}
+
+#popup-close-btn:active{
+    background-color: #c9a292;
+    color: #272533;
+}
+#popup-vs-human{
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 400;
+}
+#popup-vs-ai{
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 400;
+    
+}
+
+#popup-toggle-game-mode-btn-off:hover svg {
+    fill: #cfb4b4;
+    cursor: pointer;
+}
+
+#popup-toggle-game-mode-btn-off svg{
+    transform: scale(2);
+    margin: 15px auto;
+}
+#popup-toggle-game-mode-btn-on:hover svg {
+    fill: #cfb4b4;
+    cursor: pointer;
+}
+
+#popup-toggle-game-mode-btn-on svg{
+    transform: scale(2);
+    margin: 15px auto;
+}
+
+#ai-symbol-div{
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 400;
+    padding-top: 5px;
+    font-size: 8pt;
+}
+
+#ai-symbol:hover{
+    cursor: pointer;
+}
+
+#ai-symbol:hover svg{
+    transform:scale(1.5);
+    transition: transform 0.3s ease-in-out;
+}
+
+#ai-options {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
 @keyframes pulse {
     0% {
       stroke-opacity: 1;
@@ -264,6 +332,34 @@ footer a{
     }
 }
 
+.btn-container{
+    display: grid;
+    align-items: center;
+    flex-direction: column;
+    grid-template-columns: 3 1fr;
+}
+
+#apply-btn{
+    background-color:green;
+    color: whitesmoke;
+    width: fit-content;
+    padding: 15px 20px;
+    border-radius: 10%;
+    border: 2px solid white;
+    justify-self: center;
+    font-weight: 600;
+}
+
+#apply-btn:hover{
+    background-color:rgb(27, 151, 27);
+    color:antiquewhite;
+    cursor: pointer;
+}
+
+#apply-btn:active{
+    background-color:rgb(10, 66, 10);
+    color:white;
+}
 
 @media screen and (max-width: 500px) and (min-height:450px) {
     main {
