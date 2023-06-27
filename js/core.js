@@ -166,6 +166,7 @@ export default Object.freeze(class Core {
             throw new this.#InvalidGameModeError();
         if (this.#players[this.#turn] !== Core.PlayerControllers.ai)
             throw new this.#InvalidPlayerControllerError();
+
         return new Promise(resolve => {
             setTimeout(()=>{
                 switch (this.#aiStrategy) {
@@ -186,6 +187,7 @@ export default Object.freeze(class Core {
                 resolve();
             },200)
         })
+
     }
 
     /* Custom Error Classes */

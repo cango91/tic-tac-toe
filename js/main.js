@@ -98,7 +98,8 @@ function boardClickListener(evt){
     }else{
         return;
     }
-    if(turn === 1) game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]).then(()=>console.log("move sent")).catch((err)=>console.log(err));
+    game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]).then(()=>console.log("move sent")).catch((err)=>console.log(err));
+
 }
 
 
