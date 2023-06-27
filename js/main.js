@@ -21,10 +21,12 @@ const svgInnerX = `<line x1="20" y1="20" x2="80" y2="80" stroke="black" stroke-w
 <line x1="20" y1="80" x2="80" y2="20" stroke="black" stroke-width="5"></line>`;
 
 const gameModes = [Core.GameModes.vsHuman, Core.GameModes.vsAI];
+const aiOpponents = [Core.AIStrategies.rando, Core.AIStrategies.dumbo, Core.AIStrategies.smarto, Core.AIStrategies.maestro];
 let turn = null;
 const game = new Core();
 // TODO: use this when restarting to begin the same type of gamemode
 let currentMode = gameModes[0];
+let currentOppopnent = aiOpponents[0];
 
 
 // Add event listeners
@@ -40,7 +42,8 @@ iconsEl.addEventListener('click',evt=>iconsClickListener(evt));
 boardEl.addEventListener('click',evt=>boardClickListener(evt));
 
 // Begin in multiplayer by default
-beginMultiPlayerGame();
+//beginMultiPlayerGame();
+beginSinglePlayerGame();
 
 // Defer audio load until after game is initialized for low-bandwith mobile connections
 asyncAddAudio();
@@ -48,6 +51,11 @@ asyncAddAudio();
 function beginMultiPlayerGame(){
     game.initializeGame(gameModes[0]);
     game.nextTurn(handleGame);
+}
+
+function beginSinglePlayerGame(){
+    game.initializeGame(gameModes[1],aiOpponents[0]);
+    game.nextTurn(handleGame);    
 }
 
 function selfOrParentCheck(event,parentSelector){
@@ -90,16 +98,12 @@ function boardClickListener(evt){
     }else{
         return;
     }
-    lastTurn = turn;
-    game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]);
+    if(turn === 1) game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]);
 }
 
 
 function handleGame(turnState){
-    //console.log(turnState);
-    // console.log(game.arrayToBitboards(turnState.boardState));
-    // console.log(game.bitboardsToArray(...game.arrayToBitboards(turnState.boardState)));
-    console.log(game.minimax(...game.arrayToBitboards(turnState.boardState), lastTurn === 1 ? true : false));
+     console.log(turnState);
     const msg ={};
     // if game is finished
     if(turnState.gameState === Core.GameStates.finished){
@@ -111,14 +115,23 @@ function handleGame(turnState){
             msg.text = "<b>It's a tie &#10707;</b>";
             msg.color = "brown";
         }
-    }else if(turnState.gameState === Core.GameStates.waitingForAI){
-        // TODO: Set boardEl and child div's .style.cursor to waiting, also handle disabled clicking
     }else if(turnState.gameState === Core.GameStates.waitingForHuman){
         // set turn
         turn = turnState.turn;
+        boardEl.classList.remove('ai-turn');
         msg.text = `Player <b>${turn === -1 ? 'O' : 'X'}</b> turn`
     }
     render(turnState.boardState,msg,turnState.winState.winningCondition);
+
+    if(turnState.gameState === Core.GameStates.waitingForAI){
+        turn = turnState.turn;
+        boardEl.classList.add("ai-turn");
+        return game.nextTurn(handleGame);
+    }
+}
+
+function iter(){
+    game.nextTurn(handleGame);
 }
 
 function render(boardState,msg,winCondtion = null){

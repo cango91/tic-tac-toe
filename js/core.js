@@ -8,6 +8,8 @@ export default Object.freeze(class Core {
     #boardState;
     #turn;
     #players;
+    #aiStrategy;
+    #aiSymbol;
     /*  Static Fields (as enums) */
 
     /**
@@ -49,12 +51,22 @@ export default Object.freeze(class Core {
      * Enum for AI difficulties
      */
     static AIStrategies = Object.freeze(/**@lends Core.AIStrategies */{
-        /** Easiest - will try to make other player win */
-        dumbo: Symbol('dumbo'),
-        /** Random - will always choose random */
-        rando: Symbol('rando'),
-        /** Hardest - will always tie or win */
-        maestro: Symbol('maestro')
+        /** Easiest - will try to make other player win 
+         * Description: He's actually very smart, just hates winning
+        */
+        dumbo: Symbol("He's actually very smart, he just hates winning!"),
+        /** Random - will always choose random 
+         * Description: Doesn't actually know the game's rules. Just clicks on empty boxes
+        */
+        rando: Symbol("Doesn't actually understands this game, just clicks on empty boxes..."),
+        /** Mostly random but won't miss obviously winning moves
+         * Description: Not the brightest bulb, but he's trying at least
+        */
+        smarto: Symbol("Not the brightest bulb, but he's trying at least..."),
+        /** Hardest - will always tie or win 
+         * Description: She's the master of this game. You can't actually beat her, best hope for a draw
+        */
+        maestro: Symbol("She's the master of this game. You can't actually beat her, best you can hope for is a draw!")
     });
 
     /* Public Getters and Setters */
@@ -149,6 +161,25 @@ export default Object.freeze(class Core {
         throw new this.#InvalidPlayerError();
     }
 
+    #aiMove() {
+        if (this.#gameMode !== Core.GameModes.vsAI)
+            throw new this.#InvalidGameModeError();
+        if (this.#players[this.#turn] !== Core.PlayerControllers.ai)
+            throw new this.#InvalidPlayerControllerError();
+        switch (this.#aiStrategy) {
+            case Core.AIStrategies.rando:
+                let [xBoard, oBoard] = this.arrayToBitboards(this.#boardState);
+                let rand;
+                do {
+                    rand = Math.floor(Math.random() * 9);
+                } while (!((xBoard | oBoard) ^ (1 << rand)))
+                this.#makeMove(this.#turn, Math.floor(rand / 3), rand % 3);
+                break;
+            default:
+                throw this.#NotImplementedError();
+        }
+    }
+
     /* Custom Error Classes */
 
     #InvalidPlayerError = class InvalidPlayerError extends Error {
@@ -170,6 +201,13 @@ export default Object.freeze(class Core {
         constructor(msg) {
             super(msg);
             this.name = "Invalid Game State Error";
+        }
+    }
+
+    #InvalidAIStrategyError = class InvalidAIStrategy extends Error {
+        constructor(msg) {
+            super(msg);
+            this.name = "Invalid AI Strategy Error";
         }
     }
 
@@ -216,15 +254,28 @@ export default Object.freeze(class Core {
     /**
      * (Re-)initializes the game for the provided mode
      * @param {Symbol} mode - game mode to initialize: must be a valid Symbol from Core.GameModes
+     * @param {Number} aiSymbol - +1 for X, -1 for O. Ignored for vsHuman GameMode
+     * @param {*} aiStrategy - which ai difficulty to initialize with. Must be a valid Symbol from Core.AIStrategies. Ignored for vsHuman GameMode
      */
-    initializeGame(mode) {
+    initializeGame(mode, aiStrategy = Core.AIStrategies.rando, aiSymbol = -1) {
         switch (mode) {
             case Core.GameModes.vsHuman:
                 this.#gameMode = mode;
                 this.#initPlayers(Core.PlayerControllers.human, Core.PlayerControllers.human);
                 break;
             case Core.GameModes.vsAI:
-                throw new this.#NotImplementedError("This feature is not yet implemented");
+                if (!Object.values(Core.Players).includes(aiSymbol))
+                    throw new this.#InvalidPlayerError();
+                if (!Object.values(Core.AIStrategies).includes(aiStrategy))
+                    throw new this.#InvalidAIStrategyError();
+                this.#gameMode = mode;
+                this.#aiStrategy = aiStrategy;
+                this.#initPlayers(
+                    aiSymbol > 0 ? Core.PlayerControllers.ai : Core.PlayerControllers.human,
+                    aiSymbol > 0 ? Core.PlayerControllers.human : Core.PlayerControllers.ai
+                );
+                break;
+            // throw new this.#NotImplementedError("This feature is not yet implemented");
             default:
                 throw new this.#InvalidGameModeError(`Game mode must be one of Core.GameModes.{${Object.keys(Core.GameModes)}}`);
         }
@@ -261,13 +312,39 @@ export default Object.freeze(class Core {
                     case Core.GameStates.waitingForHuman:
                         // Try requested move
                         this.#makeMove(this.#turn, move[0], move[1]);
+                        // set next turn
+                        this.#setTurn(this.#turn * -1);
                         break;
                     default:
                         throw new this.#InvalidGameStateError();
                 }
                 break;
             case Core.GameModes.vsAI:
-                throw new this.#NotImplementedError();
+                switch (this.#gameState) {
+                    case Core.GameStates.initialized:
+                        // Game has just been initialized
+                        // Randomly decide who begins
+                        this.#setTurn(Math.random() < 0.5 ? -1 : 1);
+                        // Check if AI starts or Human does, set state accordingly
+                        this.#gameState = this.#players[this.#turn] === Core.PlayerControllers.ai ? Core.GameStates.waitingForAI : Core.GameStates.waitingForHuman;
+                        break;
+                    case Core.GameStates.waitingForHuman:
+                        this.#makeMove(this.#turn, move[0], move[1]);
+                        // set next turn
+                        this.#setTurn(this.#turn * -1);
+                        this.#gameState = Core.GameStates.waitingForAI;
+                        break;
+                    case Core.GameStates.waitingForAI:
+                        this.#aiMove();
+                        // set next turn
+                        this.#setTurn(this.#turn * -1);
+                        this.#gameState = Core.GameStates.waitingForHuman
+                        break;
+                    default:
+                        throw new this.#InvalidGameStateError();
+                }
+                break;
+            // throw new this.#NotImplementedError();
             default:
                 throw new this.#InvalidGameModeError();
         }
@@ -276,10 +353,8 @@ export default Object.freeze(class Core {
         if (win.winner !== null) {
             this.#gameState = Core.GameStates.finished;
             this.#turn = null;
-        } else {
-            // set next turn
-            this.#setTurn(this.#turn * -1);
         }
+
         return callback({
             gameState: this.#gameState,
             boardState: this.#boardState,
@@ -331,7 +406,6 @@ export default Object.freeze(class Core {
         }
         if ((bitboardO | bitboardX) === this.#tieConditionBitboard)
             return 0;
-        
     }
 
 }); 

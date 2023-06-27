@@ -67,7 +67,7 @@ header h2{
     ;
 }
 
-#board>div:hover:not(.filled):not(.disabled) {
+#board:not(.ai-turn)>div:hover:not(.filled):not(.disabled) {
     background-color: whitesmoke;
     background-image: radial-gradient(circle at center, whitesmoke, #c7c7c7);
     cursor: pointer;
@@ -77,14 +77,14 @@ header h2{
     cursor: not-allowed;
 }
 
-#board>div:active:not(.filled):not(.disabled) {
+#board>div:active:not(.filled):not(.disabled){
     background-color: #dddddd;
     background-image: none;
 }
 .icons {
     background-color: #cfb4b4;
 }
-.icons>div:not(.hidden) {
+.icons>div:not(.hidden):not(.ai-turn) {
     border: solid rgba(0, 0, 0, 0);
     border-radius: 10%;
     padding: 2px;
@@ -208,6 +208,10 @@ footer a{
 
 .popup-soft {
     color: #cfb4b4;
+}
+
+.ai-turn{
+    cursor: wait;
 }
 
 @keyframes pulse {
