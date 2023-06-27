@@ -169,10 +169,11 @@ export default Object.freeze(class Core {
         switch (this.#aiStrategy) {
             case Core.AIStrategies.rando:
                 let [xBoard, oBoard] = this.arrayToBitboards(this.#boardState);
+                let emptyBoard = ~(xBoard|oBoard);
                 let rand;
                 do {
                     rand = Math.floor(Math.random() * 9);
-                } while (!((xBoard | oBoard) ^ (1 << rand)))
+                } while ((emptyBoard & (1 << rand))=== 0)
                 this.#makeMove(this.#turn, Math.floor(rand / 3), rand % 3);
                 break;
             default:

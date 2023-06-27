@@ -25,7 +25,7 @@ const aiOpponents = [Core.AIStrategies.rando, Core.AIStrategies.dumbo, Core.AISt
 let turn = null;
 const game = new Core();
 // TODO: use this when restarting to begin the same type of gamemode
-let currentMode = gameModes[0];
+let currentMode = gameModes[1];
 let currentOppopnent = aiOpponents[0];
 
 
@@ -81,7 +81,7 @@ function iconsClickListener(evt){
         showPopup();
         console.log("settings");
     }else if(selfOrParentCheck(evt,"#restart")){
-        currentMode === gameModes[0] ? beginMultiPlayerGame() : console.log('not implemented');
+        currentMode === gameModes[0] ? beginMultiPlayerGame() : beginSinglePlayerGame();
         enableBoard();
     }else{
         return;
@@ -98,7 +98,7 @@ function boardClickListener(evt){
     }else{
         return;
     }
-    if(turn === 1) game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]);
+    game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]);
 }
 
 
