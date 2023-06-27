@@ -166,19 +166,28 @@ export default Object.freeze(class Core {
             throw new this.#InvalidGameModeError();
         if (this.#players[this.#turn] !== Core.PlayerControllers.ai)
             throw new this.#InvalidPlayerControllerError();
-        switch (this.#aiStrategy) {
-            case Core.AIStrategies.rando:
-                let [xBoard, oBoard] = this.arrayToBitboards(this.#boardState);
-                let emptyBoard = ~(xBoard|oBoard);
-                let rand;
-                do {
-                    rand = Math.floor(Math.random() * 9);
-                } while ((emptyBoard & (1 << rand))=== 0)
-                this.#makeMove(this.#turn, Math.floor(rand / 3), rand % 3);
-                break;
-            default:
-                throw this.#NotImplementedError();
-        }
+
+        return new Promise(resolve => {
+            setTimeout(()=>{
+                switch (this.#aiStrategy) {
+                    case Core.AIStrategies.rando:
+                        let [xBoard, oBoard] = this.arrayToBitboards(this.#boardState);
+                        let emptyBoard = ~(xBoard|oBoard);
+                        let rand;
+                        do {
+                            rand = Math.floor(Math.random() * 9);
+                            console.log(rand, (xBoard | oBoard).toString(2), (1 << rand).toString(2));
+                        } while ((emptyBoard & (1 << rand))===0)
+                        this.#makeMove(this.#turn, Math.floor(rand / 3), rand % 3);
+                        break;
+                    default:
+                        throw this.#NotImplementedError();
+                    
+                }
+                resolve();
+            },200)
+        })
+
     }
 
     /* Custom Error Classes */
@@ -301,67 +310,75 @@ export default Object.freeze(class Core {
      * @param  {...any} move row, col for next move. Can be null if it's AI's turn.
      */
     nextTurn(callback, ...move) {
-        switch (this.#gameMode) {
-            case Core.GameModes.vsHuman:
-                switch (this.#gameState) {
-                    case Core.GameStates.initialized:
-                        // Game has just been initialized.
-                        // Randomly decide who begins
-                        this.#setTurn(Math.random() < 0.5 ? -1 : 1);
-                        this.#gameState = Core.GameStates.waitingForHuman;
-                        break;
-                    case Core.GameStates.waitingForHuman:
-                        // Try requested move
-                        this.#makeMove(this.#turn, move[0], move[1]);
-                        // set next turn
-                        this.#setTurn(this.#turn * -1);
-                        break;
-                    default:
-                        throw new this.#InvalidGameStateError();
-                }
-                break;
-            case Core.GameModes.vsAI:
-                switch (this.#gameState) {
-                    case Core.GameStates.initialized:
-                        // Game has just been initialized
-                        // Randomly decide who begins
-                        this.#setTurn(Math.random() < 0.5 ? -1 : 1);
-                        // Check if AI starts or Human does, set state accordingly
-                        this.#gameState = this.#players[this.#turn] === Core.PlayerControllers.ai ? Core.GameStates.waitingForAI : Core.GameStates.waitingForHuman;
-                        break;
-                    case Core.GameStates.waitingForHuman:
-                        this.#makeMove(this.#turn, move[0], move[1]);
-                        // set next turn
-                        this.#setTurn(this.#turn * -1);
-                        this.#gameState = Core.GameStates.waitingForAI;
-                        break;
-                    case Core.GameStates.waitingForAI:
-                        this.#aiMove();
-                        // set next turn
-                        this.#setTurn(this.#turn * -1);
-                        this.#gameState = Core.GameStates.waitingForHuman
-                        break;
-                    default:
-                        throw new this.#InvalidGameStateError();
-                }
-                break;
-            // throw new this.#NotImplementedError();
-            default:
-                throw new this.#InvalidGameModeError();
-        }
-        // check for win conditions
-        const win = this.#checkWinConditions();
-        if (win.winner !== null) {
-            this.#gameState = Core.GameStates.finished;
-            this.#turn = null;
-        }
-
-        return callback({
-            gameState: this.#gameState,
-            boardState: this.#boardState,
-            turn: this.#turn,
-            winState: win
+        return new Promise((resolve, reject) => {
+            switch (this.#gameMode) {
+                case Core.GameModes.vsHuman:
+                    switch (this.#gameState) {
+                        case Core.GameStates.initialized:
+                            // Game has just been initialized.
+                            // Randomly decide who begins
+                            this.#setTurn(Math.random() < 0.5 ? -1 : 1);
+                            this.#gameState = Core.GameStates.waitingForHuman;
+                            break;
+                        case Core.GameStates.waitingForHuman:
+                            // Try requested move
+                            this.#makeMove(this.#turn, move[0], move[1]);
+                            // set next turn
+                            this.#setTurn(this.#turn * -1);
+                            break;
+                        default:
+                            throw new this.#InvalidGameStateError();
+                    }
+                    break;
+                case Core.GameModes.vsAI:
+                    switch (this.#gameState) {
+                        case Core.GameStates.initialized:
+                            // Game has just been initialized
+                            // Randomly decide who begins
+                            this.#setTurn(Math.random() < 0.5 ? -1 : 1);
+                            // Check if AI starts or Human does, set state accordingly
+                            this.#gameState = this.#players[this.#turn] === Core.PlayerControllers.ai ? Core.GameStates.waitingForAI : Core.GameStates.waitingForHuman;
+                            resolve(this.#reportGameState(callback));
+                            break;
+                        case Core.GameStates.waitingForHuman:
+                            this.#makeMove(this.#turn, move[0], move[1]);
+                            // set next turn
+                            this.#setTurn(this.#turn * -1);
+                            this.#gameState = Core.GameStates.waitingForAI;
+                            resolve(this.#reportGameState(callback));
+                            break;
+                        case Core.GameStates.waitingForAI:
+                            this.#aiMove().then(() => {
+                                // set next turn
+                                this.#setTurn(this.#turn * -1);
+                                this.#gameState = Core.GameStates.waitingForHuman
+                                resolve(this.#reportGameState(callback));
+                            });
+                            break;
+                        default:
+                            throw new this.#InvalidGameStateError();
+                    }
+                    break;
+                // throw new this.#NotImplementedError();
+                default:
+                    throw new this.#InvalidGameModeError();
+            }
         });
+    }
+
+    #reportGameState(callback){
+        const win = this.#checkWinConditions();
+            if (win.winner !== null) {
+                this.#gameState = Core.GameStates.finished;
+                this.#turn = null;
+            }
+
+            return callback({
+                gameState: this.#gameState,
+                boardState: this.#boardState,
+                turn: this.#turn,
+                winState: win
+            });
     }
     /**
     * Converts the 2d array representation to bitboards for x and o respectively

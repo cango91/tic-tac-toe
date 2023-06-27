@@ -98,12 +98,13 @@ function boardClickListener(evt){
     }else{
         return;
     }
-    game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]);
+    game.nextTurn(handleGame,squareTarget.id[2],squareTarget.id[3]).then(()=>console.log("move sent")).catch((err)=>console.log(err));
+
 }
 
 
 function handleGame(turnState){
-     console.log(turnState);
+    //console.log(turnState);
     const msg ={};
     // if game is finished
     if(turnState.gameState === Core.GameStates.finished){
@@ -119,20 +120,23 @@ function handleGame(turnState){
         // set turn
         turn = turnState.turn;
         boardEl.classList.remove('ai-turn');
+    }
+    if(turnState.gameState !== Core.GameStates.finished){
         msg.text = `Player <b>${turn === -1 ? 'O' : 'X'}</b> turn`
     }
-    render(turnState.boardState,msg,turnState.winState.winningCondition);
+    
 
     if(turnState.gameState === Core.GameStates.waitingForAI){
         turn = turnState.turn;
         boardEl.classList.add("ai-turn");
-        return game.nextTurn(handleGame);
+        msg.text = `Player <b>${turn === -1 ? 'O' : 'X'}</b> turn`
+        game.nextTurn(handleGame)
+            .then(()=>console.log("AI has made its move"))
+            .catch((err)=>console.log(err));
     }
+    render(turnState.boardState,msg,turnState.winState.winningCondition);
 }
 
-function iter(){
-    game.nextTurn(handleGame);
-}
 
 function render(boardState,msg,winCondtion = null){
     renderStatus(msg);
