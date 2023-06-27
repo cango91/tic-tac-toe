@@ -1,12 +1,12 @@
 * {
-    box-sizing:border-box;
-}
-
-:root{
+    box-sizing: border-box;
+  }
+  
+  :root {
     --win-color: #1b7635;
-}
-
-body {
+  }
+  
+  body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,9 +15,9 @@ body {
     margin: 0;
     /* padding-top: 20vh; */
     background-color: #323041;
-}
-
-header {
+  }
+  
+  header {
     position: fixed;
     align-items: center;
     top: 0;
@@ -26,18 +26,18 @@ header {
     background-color: #b55f52;
     text-align: center;
     max-height: 20vh;
-    color:blanchedalmond;
-}
-
-main {
+    color: blanchedalmond;
+  }
+  
+  main {
     margin-top: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 80vw;
-}
-
-h1.main-title {
+  }
+  
+  h1.main-title {
     font-family: 'Monoton', cursive;
     font-weight: 400;
     font-size: 30pt;
@@ -45,99 +45,107 @@ h1.main-title {
     margin-top: 0;
     margin-bottom: 0;
     min-width: 375px;
-}
-
-header h2{
+  }
+  
+  header h2 {
     margin-top: 2vh;
-}
-
-#board {
+  }
+  
+  #board {
     background-color: darkgrey;
     display: grid;
     grid-template-rows: repeat(3, 20vmin);
     grid-template-columns: repeat(3, 20vmin);
     border-radius: 5%;
-}
-
-#board>div {
+  }
+  
+  #board>div {
     background-color: lightgrey;
     margin: 1vmin;
     border-radius: 25%;
     border: 1vmin solid whitesmoke;
     ;
-}
-
-#board:not(.ai-turn)>div:hover:not(.filled):not(.disabled) {
+  }
+  
+  #board:not(.ai-turn)>div:hover:not(.filled):not(.disabled) {
     background-color: whitesmoke;
     background-image: radial-gradient(circle at center, whitesmoke, #c7c7c7);
     cursor: pointer;
-}
-
-.disabled:hover, #board>div.filled:hover, #board>div.disabled:hover {
+  }
+  
+  .disabled:hover,
+  #board>div.filled:hover,
+  #board>div.disabled:hover {
     cursor: not-allowed;
-}
-
-#board>div:active:not(.filled):not(.disabled){
+  }
+  
+  #board>div:active:not(.filled):not(.disabled) {
     background-color: #dddddd;
     background-image: none;
-}
-.icons {
+  }
+  
+  .icons {
     background-color: #cfb4b4;
-}
-.icons>div:not(.hidden):not(.ai-turn) {
+  }
+  
+  .icons>div:not(.hidden) {
     border: solid rgba(0, 0, 0, 0);
     border-radius: 10%;
     padding: 2px;
     display: inline-block;
     cursor: pointer;
-}
-
-.icons>div:hover:not(#status) {
+  }
+  
+  .icons>div:hover:not(#status) {
     background-color: darksalmon;
     background-image: radial-gradient(circle at center, darksalmon, #b55f52);
     border: solid;
-}
-
-#sound-on:not(.hidden), #sound-off:not(.hidden) {
-    display: inline-block;
-}
-
-
-#sound-off:hover line {
+  }
+  
+  /* 
+  One of the suspects for the issue with sound-on/off icons not hiding/showing properly. 
+  A combination of promises, disabling this style and changing the sequence of instructions on the function adding the audio element seems to have fixed the issue.
+  #sound-on:not(.hidden), #sound-off:not(.hidden) {
+      display: inline-block;
+  } 
+  */
+  
+  
+  #sound-off:hover line {
     stroke: whitesmoke;
-}
-
-#sound-off:active line {
+  }
+  
+  #sound-off:active line {
     stroke: #cfb4b4;
-}
-
-.icons>div:active:not(#status) {
+  }
+  
+  .icons>div:active:not(#status) {
     /* padding: 1px; */
     background-color: #93554c;
     background-image: none;
-}
-
-#game-logo{
+  }
+  
+  #game-logo {
     display: none;
-}
-
-#big-logo{
+  }
+  
+  #big-logo {
     display: none;
-
-}
-
-
-footer{
+  
+  }
+  
+  
+  footer {
     margin-top: 20px;
     color: #dddddd;
     text-align: center;
-}
-
-footer a{
+  }
+  
+  footer a {
     color: #cfb4b4;
-}
-
-#status{
+  }
+  
+  #status {
     display: inline-block;
     position: fixed;
     right: 1vmin;
@@ -145,19 +153,19 @@ footer a{
     color: black;
     width: 200px;
     max-height: 3vmax;
-    margin-top:1vmax;
+    margin-top: 1vmax;
     flex-wrap: wrap;
-}
-
-#status-text{
+  }
+  
+  #status-text {
     font-family: sans-serif;
-}
-
-.animated-winner > svg {
+  }
+  
+  .animated-winner>svg {
     animation: pulse 2s infinite;
-}
-
-
+  }
+  
+  
   #popup-overlay {
     position: fixed;
     top: 0;
@@ -178,14 +186,14 @@ footer a{
     transform: translate(-50%, -50%);
     max-width: 80%;
     max-height: 80%;
-    background:#93554c;
+    background: #93554c;
     padding: 20px;
     overflow: auto;
-    width:fit-content;
-    color:whitesmoke;
+    width: fit-content;
+    color: whitesmoke;
     border: 2px solid white;
     border-radius: 3%;
-
+  
   }
   
   .popup-content {
@@ -201,183 +209,196 @@ footer a{
   .popup-content p {
     font-size: 16px;
   }
-
-.hidden {
+  
+  .hidden {
     display: none;
-}
-
-.popup-soft {
+  }
+  
+  .popup-soft {
     color: #cfb4b4;
-}
-
-.ai-turn{
+  }
+  
+  .ai-turn {
     cursor: wait;
-}
-
-#popup-close-btn{
+  }
+  
+  #popup-close-btn {
     position: absolute;
-    top:0;
+    top: 0;
     right: 0;
-    padding:5px 5px 0 5px;
+    padding: 5px 5px 0 5px;
     border-radius: 30%;
-}
-
-#popup-close-btn:hover {
+  }
+  
+  #popup-close-btn:hover {
     background-color: #cfb4b4;
     color: #323041;
     cursor: pointer;
-}
-
-#popup-close-btn:active{
+  }
+  
+  #popup-close-btn:active {
     background-color: #c9a292;
     color: #272533;
-}
-#popup-vs-human{
+  }
+  
+  #popup-vs-human {
     font-family: 'Press Start 2P', cursive;
     font-weight: 400;
-}
-#popup-vs-ai{
+  }
+  
+  #popup-vs-ai {
     font-family: 'Press Start 2P', cursive;
     font-weight: 400;
-    
-}
-
-#popup-toggle-game-mode-btn-off:hover svg {
+  
+  }
+  
+  #popup-toggle-game-mode-btn-off:hover svg {
     fill: #cfb4b4;
     cursor: pointer;
-}
-
-#popup-toggle-game-mode-btn-off svg{
+  }
+  
+  #popup-toggle-game-mode-btn-off svg {
     transform: scale(2);
     margin: 15px auto;
-}
-#popup-toggle-game-mode-btn-on:hover svg {
+  }
+  
+  #popup-toggle-game-mode-btn-on:hover svg {
     fill: #cfb4b4;
     cursor: pointer;
-}
-
-#popup-toggle-game-mode-btn-on svg{
+  }
+  
+  #popup-toggle-game-mode-btn-on svg {
     transform: scale(2);
     margin: 15px auto;
-}
-
-#ai-symbol-div{
+  }
+  
+  #ai-symbol-div {
     font-family: 'Press Start 2P', cursive;
     font-weight: 400;
     /*padding-top: 5px;*/
     font-size: 8pt;
-}
-
-#ai-symbol-div svg *{
+  }
+  
+  #ai-symbol-div svg * {
     stroke: white;
-
-
-}
-#ai-symbol svg{
+  
+  
+  }
+  
+  #ai-symbol svg {
     transform: scale(1.8);
-}
-
-#ai-symbol:hover{
+  }
+  
+  #ai-symbol:hover {
     cursor: pointer;
-}
-
-#ai-symbol:hover svg{
-    transform:scale(2);
+  }
+  
+  #ai-symbol:hover svg {
+    transform: scale(2);
     transition: transform 0.3s ease-in-out;
-}
-
-#ai-options {
+  }
+  
+  #ai-options {
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
-}
-
-#ai-opponents h3 {
+  }
+  
+  #ai-opponents h3 {
     font-family: 'Press Start 2P', cursive;
     font-size: 12pt;
-}
-#ai-opponents p {
+  }
+  
+  #ai-opponents p {
     font-family: 'Press Start 2P', cursive;
     font-size: 10pt;
-}
-
-#ai-opponents li{
+  }
+  
+  #ai-opponents li {
     list-style-type: none;
     text-indent: 0;
-}
-
-#ai-opponents li p{
+  }
+  
+  #ai-opponents li p {
     text-indent: 0;
-
-}
-ol{
+  
+  }
+  
+  ol {
     padding: 0;
-}
-
-.popup-content h2{
+  }
+  
+  .popup-content h2 {
     font-family: 'Press Start 2P', cursive;
-}
-#click-to-toggle:hover {
+  }
+  
+  #click-to-toggle:hover {
     cursor: pointer;
-}
-@keyframes pulse {
+  }
+  
+  @keyframes pulse {
     0% {
       stroke-opacity: 1;
       transform: scale(100%);
     }
+  
     50% {
       stroke-opacity: 0.5;
       transform: scale(105%);
     }
+  
     100% {
       stroke-opacity: 1;
       transform: scale(100%);
     }
   }
-
-@media screen and (max-width:443px){
-    #status{
-        display: block;
-        background-color: #cfb4b4;
-        border-radius: 0;
-        padding: 0;
-        margin-top: 0;
-        width: 100%;
-        right:0;
-        padding-right: 10px;
+  
+  @media screen and (max-width:443px) {
+    #status {
+      display: block;
+      background-color: #cfb4b4;
+      border-radius: 0;
+      padding: 0;
+      margin-top: 0;
+      width: 100%;
+      right: 0;
+      padding-right: 10px;
     }
-}
-
-@media screen and (max-width:355px){
-    .main-title{
-        display: none;
+  }
+  
+  @media screen and (max-width:355px) {
+    .main-title {
+      display: none;
     }
-    #big-logo{
-        display: block;
+  
+    #big-logo {
+      display: block;
     }
-    #big-logo img{
-        width: 50px;
+  
+    #big-logo img {
+      width: 50px;
     }
-    #status{
-        display: block;
-        background-color: #cfb4b4;
-        border-radius: 0;
-        padding: 0;
-        margin-top: 0;
-        width: 100%;
-        right:0;
-        padding-right: 10px;
+  
+    #status {
+      display: block;
+      background-color: #cfb4b4;
+      border-radius: 0;
+      padding: 0;
+      margin-top: 0;
+      width: 100%;
+      right: 0;
+      padding-right: 10px;
     }
-}
-
-.btn-container{
+  }
+  
+  .btn-container {
     display: grid;
     align-items: center;
     flex-direction: column;
     grid-template-columns: 3 1fr;
-}
-
-#apply-btn{
-    background-color:green;
+  }
+  
+  #apply-btn {
+    background-color: green;
     color: whitesmoke;
     width: fit-content;
     padding: 15px 20px;
@@ -385,91 +406,93 @@ ol{
     border: 2px solid white;
     justify-self: center;
     font-weight: 600;
-}
-
-#apply-btn:hover{
-    background-color:rgb(27, 151, 27);
-    color:antiquewhite;
+  }
+  
+  #apply-btn:hover {
+    background-color: rgb(27, 151, 27);
+    color: antiquewhite;
     cursor: pointer;
-}
-
-#apply-btn:active{
-    background-color:rgb(10, 66, 10);
-    color:white;
-}
-
-@media screen and (max-width: 500px) and (min-height:450px) {
+  }
+  
+  #apply-btn:active {
+    background-color: rgb(10, 66, 10);
+    color: white;
+  }
+  
+  @media screen and (max-width: 500px) and (min-height:450px) {
     main {
-
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        min-width: 90vw;
+  
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      min-width: 90vw;
     }
-
-    #board{
-        min-width: 90%;
-        grid-template-rows: repeat(3, 30vmin);
-        grid-template-columns: repeat(3, 30vmin);
+  
+    #board {
+      min-width: 90%;
+      grid-template-rows: repeat(3, 30vmin);
+      grid-template-columns: repeat(3, 30vmin);
     }
-} 
-
-
-@media screen and (max-height:675px) and (orientation:landscape) {
+  }
+  
+  
+  @media screen and (max-height:675px) and (orientation:landscape) {
     body {
-        padding-top: 10vh;
+      padding-top: 10vh;
     }
-
+  
     h1.main-title {
-        font-size: 25pt;
-        max-height: fit-content;
+      font-size: 25pt;
+      max-height: fit-content;
     }
-
+  
     main {
-        margin-top: 25vh;
+      margin-top: 25vh;
     }
-
-    header h2{
-        margin-top: auto;
+  
+    header h2 {
+      margin-top: auto;
     }
-
-} 
-
-@media screen and (max-height:400px) {
+  
+  }
+  
+  @media screen and (max-height:400px) {
     body {
-        padding-top: 10vh;
+      padding-top: 10vh;
     }
-
+  
     h1.main-title {
-        font-size: 25pt;
-        max-height: fit-content;
-        display: none;
+      font-size: 25pt;
+      max-height: fit-content;
+      display: none;
     }
-
+  
     main {
-        margin-top: 10vh;
+      margin-top: 10vh;
     }
-
-    header h2{
-        margin-top: auto;
+  
+    header h2 {
+      margin-top: auto;
     }
-
-    #game-logo{
-        display: block;
-        float: left;
-        position: fixed;
+  
+    #game-logo {
+      display: block;
+      float: left;
+      position: fixed;
     }
-    #big-logo{
-        display: none;
+  
+    #big-logo {
+      display: none;
     }
-    #game-logo > img{
-        height: 3vmax;;
+  
+    #game-logo>img {
+      height: 3vmax;
     }
-    
-}
-
-@media screen and (min-height:1200px) {
-    main{
-        margin-top: 10px;
+  
+  }
+  
+  @media screen and (min-height:1200px) {
+    main {
+      margin-top: 10px;
     }
-}
+  }
